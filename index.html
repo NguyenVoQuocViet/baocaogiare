@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Dịch vụ Học thuật &amp; Văn phòng - Chuyên nghiệp cho Sinh viên</title>
+  <meta name="description"
+    content="Dịch vụ Word, PowerPoint, Canva, tiểu luận, CV và luận văn chuẩn học thuật dành cho sinh viên. Giá rẻ, đúng hạn, bảo mật." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="js/tailwind-config.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap"
+    rel="stylesheet" />
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body class="bg-background text-on-surface selection:bg-primary-fixed pb-20 md:pb-0">
+
+  <!-- ===== Header ===== -->
+  <header class="site-header fixed top-0 z-50 w-full bg-surface/80 backdrop-blur-md">
+    <div
+      class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-16">
+      <a class="flex items-center gap-2" href="index.html">
+        <img alt="Logo Báo cáo giá rẻ" class="h-10 w-10 object-contain" src="assets/logo.svg" />
+        <span class="text-xl font-bold text-primary hidden sm:block">Báo cáo giá rẻ</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-stack-lg">
+        <a class="text-primary font-bold border-b-2 border-primary pb-1" href="index.html">Trang chủ</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="services.html">Dịch vụ</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="service-detail.html">Bảng giá</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="admin-dashboard.html">Quản trị</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="#lien-he">Liên hệ</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a class="hidden md:block text-primary font-semibold hover:underline transition-all"
+          href="admin-dashboard.html">Đăng nhập</a>
+        <a class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-primary/20 tap-scale hover:opacity-90 transition-all"
+          href="services.html#dat-hang">Đặt dịch vụ</a>
+        <button aria-expanded="false" aria-label="Mở menu"
+          class="md:hidden w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container rounded-full transition-colors"
+          id="menu-toggle">
+          <span class="hamburger"><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Menu mobile (overlay) ===== -->
+  <div class="mobile-menu md:hidden" id="mobile-menu">
+    <div class="flex justify-end p-4">
+      <button aria-label="Đóng menu" class="w-10 h-10 flex items-center justify-center text-on-surface-variant"
+        data-menu-close>
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <nav class="flex flex-col items-center gap-6 pt-10 text-2xl font-bold">
+      <a class="menu-link text-primary" href="index.html">Trang chủ</a>
+      <a class="menu-link text-on-surface hover:text-primary transition-colors" href="services.html">Dịch vụ</a>
+      <a class="menu-link text-on-surface hover:text-primary transition-colors" href="service-detail.html">Bảng giá</a>
+      <a class="menu-link text-on-surface hover:text-primary transition-colors" href="admin-dashboard.html">Quản trị</a>
+      <a class="menu-link text-on-surface hover:text-primary transition-colors" href="#lien-he">Liên hệ</a>
+      <a class="menu-link bg-secondary-container text-on-secondary-fixed px-8 py-3 rounded-2xl text-lg shadow-lg tap-scale"
+        href="services.html#dat-hang">Đặt dịch vụ ngay</a>
+    </nav>
+  </div>
+
+  <main class="pt-16">
+
+    <!-- ===== Hero: Desktop (split 2 cột) ===== -->
+    <section class="hero-gradient relative overflow-hidden py-16 md:py-24 hidden md:block">
+      <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-2 gap-gutter items-center">
+        <div class="space-y-stack-md relative z-10">
+          <div
+            class="inline-flex items-center gap-2 bg-primary-fixed/30 text-on-primary-fixed px-3 py-1 rounded-full text-xs font-medium border border-primary/10">
+            <span class="material-symbols-outlined text-[16px]">verified</span>
+            Tiêu chuẩn học thuật 5 sao
+          </div>
+          <h1 class="text-[44px] lg:text-[56px] leading-[1.1] font-extrabold text-on-surface tracking-tight">
+            Dịch vụ Word, PowerPoint, Canva <span class="text-primary">chuyên nghiệp</span> dành cho sinh viên
+          </h1>
+          <p class="text-lg text-on-surface-variant max-w-xl">
+            Tiết kiệm thời gian, nâng cao điểm số với các bản trình bày ấn tượng, tiểu luận chỉn chu và luận văn đúng
+            chuẩn format. Sẵn sàng hỗ trợ 24/7.
+          </p>
+          <div class="flex flex-row gap-4 pt-4">
+            <a class="bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] active:scale-95 inline-block"
+              href="services.html#dat-hang">Đặt dịch vụ ngay</a>
+            <a class="border-2 border-primary text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary/5 transition-all inline-block"
+              href="service-detail.html">Xem bảng giá</a>
+          </div>
+          <div class="flex items-center gap-4 pt-6">
+            <div class="flex -space-x-3">
+              <img alt="Sinh viên đã tin dùng dịch vụ" class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                src="https://picsum.photos/seed/sv-hero-1/80/80" />
+              <img alt="Sinh viên đã tin dùng dịch vụ" class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                src="https://picsum.photos/seed/sv-hero-2/80/80" />
+              <img alt="Sinh viên đã tin dùng dịch vụ" class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                src="https://picsum.photos/seed/sv-hero-3/80/80" />
+            </div>
+            <p class="text-sm text-on-surface-variant font-medium">10k+ Sinh viên đã tin dùng</p>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="absolute inset-0 bg-primary/10 blur-[100px] rounded-full"></div>
+          <div
+            class="glass-card p-4 rounded-3xl relative z-10 card-shadow rotate-3 hover:rotate-0 transition-transform duration-500">
+            <img alt="Laptop hiển thị bản thiết kế trình chiếu trên bàn làm việc"
+              class="w-full h-auto rounded-2xl shadow-lg border border-outline-variant"
+              src="https://picsum.photos/seed/workspace-canva/960/640" />
+          </div>
+          <div class="absolute -bottom-6 -left-6 glass-card p-6 rounded-2xl shadow-xl z-20">
+            <div class="flex items-center gap-3">
+              <div class="bg-primary-container p-2 rounded-lg text-white">
+                <span class="material-symbols-outlined">auto_awesome</span>
+              </div>
+              <div>
+                <p class="font-bold text-primary">Chỉnh sửa 0đ</p>
+                <p class="text-xs text-on-surface-variant">Không giới hạn số lần</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Hero: Mobile (thẻ gradient xanh) ===== -->
+    <section class="px-margin-mobile pt-stack-lg pb-stack-lg md:hidden">
+      <div class="hero-gradient-mobile rounded-3xl p-8 text-white relative overflow-hidden shadow-lg">
+        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+        <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-primary-fixed-dim/20 rounded-full blur-2xl"></div>
+        <div class="relative z-10 space-y-6">
+          <span class="inline-block py-1 px-3 bg-white/20 rounded-full text-sm font-semibold backdrop-blur-md">Nhanh
+            chóng &amp; Chất lượng</span>
+          <h1 class="text-[28px] font-bold leading-tight">Dịch vụ Word, PowerPoint, Canva chuyên nghiệp</h1>
+          <p class="text-primary-fixed/90 max-w-[85%]">Hỗ trợ sinh viên và dân văn phòng hoàn thành tài liệu đẹp, chuẩn
+            trong thời gian ngắn nhất.</p>
+          <a class="block w-full py-4 bg-secondary-container text-on-secondary-fixed text-center font-semibold text-xl rounded-2xl shadow-lg tap-scale"
+            href="services.html#dat-hang">Đặt ngay</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Dịch vụ nổi bật ===== -->
+    <section class="py-10 md:py-20 bg-surface" id="dich-vu">
+      <div
+        class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex items-end justify-between md:justify-center md:text-center mb-8 md:mb-16">
+        <div>
+          <h2 class="text-2xl md:text-[32px] font-bold text-on-surface mb-2 md:mb-4">Dịch vụ nổi bật</h2>
+          <p class="hidden md:block text-on-surface-variant max-w-2xl mx-auto">Chúng tôi cung cấp giải pháp toàn diện
+            cho mọi nhu cầu học tập và văn phòng của bạn với mức chi phí tối ưu nhất.</p>
+        </div>
+        <a class="md:hidden text-primary text-sm font-semibold" href="services.html">Xem tất cả</a>
+      </div>
+
+      <!-- Mobile: cuộn ngang -->
+      <div class="md:hidden flex overflow-x-auto hide-scrollbar gap-4 px-margin-mobile pb-4">
+        <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
+          href="service-detail.html">
+          <div class="w-12 h-12 bg-primary-container/10 text-primary rounded-xl flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[32px]">description</span>
+          </div>
+          <h3 class="text-sm font-semibold text-on-surface mb-1">Soạn thảo Word</h3>
+          <p class="text-[12px] text-on-surface-variant">Từ 20k/trang</p>
+        </a>
+        <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
+          href="service-detail.html">
+          <div
+            class="w-12 h-12 bg-secondary-container/10 text-secondary rounded-xl flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[32px]">slideshow</span>
+          </div>
+          <h3 class="text-sm font-semibold text-on-surface mb-1">PowerPoint</h3>
+          <p class="text-[12px] text-on-surface-variant">Từ 50k/bài</p>
+        </a>
+        <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
+          href="service-detail.html">
+          <div
+            class="w-12 h-12 bg-tertiary-container/10 text-tertiary rounded-xl flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[32px]">palette</span>
+          </div>
+          <h3 class="text-sm font-semibold text-on-surface mb-1">Thiết kế Canva</h3>
+          <p class="text-[12px] text-on-surface-variant">Banner, CV, v.v.</p>
+        </a>
+        <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
+          href="service-detail.html">
+          <div class="w-12 h-12 bg-primary-container/10 text-primary rounded-xl flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[32px]">edit_note</span>
+          </div>
+          <h3 class="text-sm font-semibold text-on-surface mb-1">Viết Tiểu luận</h3>
+          <p class="text-[12px] text-on-surface-variant">Từ 150k/bài</p>
+        </a>
+        <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
+          href="service-detail.html">
+          <div
+            class="w-12 h-12 bg-secondary-container/10 text-secondary rounded-xl flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-[32px]">school</span>
+          </div>
+          <h3 class="text-sm font-semibold text-on-surface mb-1">Hỗ trợ Luận văn</h3>
+          <p class="text-[12px] text-on-surface-variant">Từ 500k</p>
+        </a>
+      </div>
+
+      <!-- Desktop: lưới 6 thẻ -->
+      <div class="hidden md:grid max-w-container-max mx-auto px-margin-desktop grid-cols-2 lg:grid-cols-3 gap-gutter">
+        <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
+          href="service-detail.html">
+          <div
+            class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[32px]">description</span>
+          </div>
+          <h3 class="text-xl font-semibold text-on-surface mb-3">Làm Microsoft Word</h3>
+          <p class="text-on-surface-variant mb-6">Trình bày văn bản, căn chỉnh lề, đánh mục lục tự động đúng quy chuẩn.
+          </p>
+          <div class="flex justify-between items-center border-t border-surface-container pt-4">
+            <span class="text-sm text-on-surface-variant italic">Giá từ 50.000đ</span>
+            <span
+              class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </div>
+        </a>
+        <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
+          href="service-detail.html">
+          <div
+            class="w-14 h-14 bg-secondary-fixed/30 rounded-xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[32px]">co_present</span>
+          </div>
+          <h3 class="text-xl font-semibold text-on-surface mb-3">Thiết kế PowerPoint</h3>
+          <p class="text-on-surface-variant mb-6">Thiết kế slide thuyết trình chuyên nghiệp, hiệu ứng mượt mà, nội dung
+            cô đọng.</p>
+          <div class="flex justify-between items-center border-t border-surface-container pt-4">
+            <span class="text-sm text-on-surface-variant italic">Giá từ 100.000đ</span>
+            <span
+              class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </div>
+        </a>
+        <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
+          href="service-detail.html">
+          <div
+            class="w-14 h-14 bg-tertiary-fixed/30 rounded-xl flex items-center justify-center text-tertiary mb-6 group-hover:bg-tertiary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[32px]">palette</span>
+          </div>
+          <h3 class="text-xl font-semibold text-on-surface mb-3">Thiết kế Canva</h3>
+          <p class="text-on-surface-variant mb-6">Banner, poster, presentation trên Canva với phong cách hiện đại, trẻ
+            trung.</p>
+          <div class="flex justify-between items-center border-t border-surface-container pt-4">
+            <span class="text-sm text-on-surface-variant italic">Giá từ 80.000đ</span>
+            <span
+              class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </div>
+        </a>
+        <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
+          href="service-detail.html">
+          <div
+            class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[32px]">edit_note</span>
+          </div>
+          <h3 class="text-xl font-semibold text-on-surface mb-3">Viết Tiểu luận</h3>
+          <p class="text-on-surface-variant mb-6">Hỗ trợ tìm kiếm tài liệu, lập dàn ý và viết tiểu luận đa dạng chuyên
+            ngành.</p>
+          <div class="flex justify-between items-center border-t border-surface-container pt-4">
+            <span class="text-sm text-on-surface-variant italic">Giá từ 150.000đ</span>
+            <span
+              class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </div>
+        </a>
+        <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
+          href="service-detail.html">
+          <div
+            class="w-14 h-14 bg-secondary-fixed/30 rounded-xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[32px]">badge</span>
+          </div>
+          <h3 class="text-xl font-semibold text-on-surface mb-3">Thiết kế CV</h3>
+          <p class="text-on-surface-variant mb-6">Tạo hồ sơ năng lực ấn tượng, chuẩn ATS giúp bạn ghi điểm với nhà tuyển
+            dụng.</p>
+          <div class="flex justify-between items-center border-t border-surface-container pt-4">
+            <span class="text-sm text-on-surface-variant italic">Giá từ 50.000đ</span>
+            <span
+              class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </div>
+        </a>
+        <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
+          href="service-detail.html">
+          <div
+            class="w-14 h-14 bg-tertiary-fixed/30 rounded-xl flex items-center justify-center text-tertiary mb-6 group-hover:bg-tertiary group-hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-[32px]">school</span>
+          </div>
+          <h3 class="text-xl font-semibold text-on-surface mb-3">Hỗ trợ Luận văn</h3>
+          <p class="text-on-surface-variant mb-6">Căn chỉnh format chuẩn bộ giáo dục, hỗ trợ vẽ biểu đồ và xử lý số
+            liệu.</p>
+          <div class="flex justify-between items-center border-t border-surface-container pt-4">
+            <span class="text-sm text-on-surface-variant italic">Giá từ 500.000đ</span>
+            <span
+              class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== Quy trình làm việc ===== -->
+    <section class="py-10 md:py-20 bg-surface-container-low">
+      <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+        <div class="md:text-center mb-8 md:mb-16">
+          <h2 class="text-2xl md:text-[32px] font-bold text-on-surface mb-2 md:mb-4">Quy trình làm việc</h2>
+          <p class="text-on-surface-variant max-w-xl md:mx-auto">Đơn giản, nhanh chóng và minh bạch trong từng bước thực
+            hiện.</p>
+        </div>
+
+        <!-- Desktop: 4 bước ngang có đường nối -->
+        <div class="relative hidden md:block">
+          <div class="absolute top-1/2 left-0 w-full h-0.5 bg-outline-variant -translate-y-1/2 z-0"></div>
+          <div class="grid grid-cols-4 gap-gutter relative z-10">
+            <div class="reveal flex flex-col items-center text-center">
+              <div
+                class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-primary/30">
+                1</div>
+              <div class="bg-surface p-6 rounded-2xl card-shadow w-full">
+                <span class="material-symbols-outlined text-primary mb-3 text-3xl">ads_click</span>
+                <h4 class="font-bold text-on-surface mb-2">Chọn dịch vụ</h4>
+                <p class="text-sm text-on-surface-variant">Lựa chọn loại dịch vụ và yêu cầu cụ thể của bạn.</p>
+              </div>
+            </div>
+            <div class="reveal flex flex-col items-center text-center">
+              <div
+                class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-primary/30">
+                2</div>
+              <div class="bg-surface p-6 rounded-2xl card-shadow w-full">
+                <span class="material-symbols-outlined text-primary mb-3 text-3xl">upload_file</span>
+                <h4 class="font-bold text-on-surface mb-2">Tải file</h4>
+                <p class="text-sm text-on-surface-variant">Gửi nội dung hoặc file gốc cần xử lý cho chúng tôi.</p>
+              </div>
+            </div>
+            <div class="reveal flex flex-col items-center text-center">
+              <div
+                class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-primary/30">
+                3</div>
+              <div class="bg-surface p-6 rounded-2xl card-shadow w-full">
+                <span class="material-symbols-outlined text-primary mb-3 text-3xl">payments</span>
+                <h4 class="font-bold text-on-surface mb-2">Thanh toán</h4>
+                <p class="text-sm text-on-surface-variant">Xác nhận báo giá và tiến hành thanh toán linh hoạt.</p>
+              </div>
+            </div>
+            <div class="reveal flex flex-col items-center text-center">
+              <div
+                class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-primary/30">
+                4</div>
+              <div class="bg-surface p-6 rounded-2xl card-shadow w-full">
+                <span class="material-symbols-outlined text-primary mb-3 text-3xl">task_alt</span>
+                <h4 class="font-bold text-on-surface mb-2">Nhận file</h4>
+                <p class="text-sm text-on-surface-variant">Kiểm tra và nhận bản hoàn thiện qua email/Zalo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile: timeline dọc -->
+        <div class="md:hidden relative pl-8 space-y-10">
+          <div class="absolute left-[15px] top-2 bottom-2 w-[2px] bg-outline-variant"></div>
+          <div class="reveal relative">
+            <div
+              class="absolute -left-[25px] w-5 h-5 bg-primary rounded-full border-4 border-surface ring-4 ring-primary/10">
+            </div>
+            <div class="bg-surface-container p-5 rounded-2xl">
+              <h4 class="text-sm font-semibold text-primary uppercase tracking-wider mb-1">Bước 01</h4>
+              <p class="text-xl font-semibold text-on-surface mb-2">Gửi yêu cầu</p>
+              <p class="text-sm text-on-surface-variant">Mô tả chi tiết nội dung, deadline và định dạng mong muốn qua
+                form hoặc chat.</p>
+            </div>
+          </div>
+          <div class="reveal relative">
+            <div class="absolute -left-[25px] w-5 h-5 bg-outline-variant rounded-full border-4 border-surface"></div>
+            <div class="bg-surface-container-low p-5 rounded-2xl">
+              <h4 class="text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Bước 02</h4>
+              <p class="text-xl font-semibold text-on-surface mb-2">Báo giá &amp; Xác nhận</p>
+              <p class="text-sm text-on-surface-variant">Nhận báo giá chi tiết trong 5-10 phút. Bạn đặt cọc để bắt đầu
+                triển khai.</p>
+            </div>
+          </div>
+          <div class="reveal relative">
+            <div class="absolute -left-[25px] w-5 h-5 bg-outline-variant rounded-full border-4 border-surface"></div>
+            <div class="bg-surface-container-low p-5 rounded-2xl">
+              <h4 class="text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Bước 03</h4>
+              <p class="text-xl font-semibold text-on-surface mb-2">Thực hiện &amp; Demo</p>
+              <p class="text-sm text-on-surface-variant">Chúng tôi xử lý yêu cầu và gửi bản demo để bạn xem trước và
+                điều chỉnh.</p>
+            </div>
+          </div>
+          <div class="reveal relative">
+            <div class="absolute -left-[25px] w-5 h-5 bg-outline-variant rounded-full border-4 border-surface"></div>
+            <div class="bg-surface-container-low p-5 rounded-2xl">
+              <h4 class="text-sm font-semibold text-on-surface-variant uppercase tracking-wider mb-1">Bước 04</h4>
+              <p class="text-xl font-semibold text-on-surface mb-2">Hoàn thiện &amp; Bàn giao</p>
+              <p class="text-sm text-on-surface-variant">Chốt bản cuối, thanh toán phần còn lại và nhận file gốc qua
+                email.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Tại sao chọn chúng tôi ===== -->
+    <section class="py-10 md:py-20 bg-surface">
+      <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+        <div
+          class="reveal bg-primary-container text-on-primary-container rounded-3xl md:rounded-[2rem] p-8 md:p-12 overflow-hidden relative">
+          <div
+            class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2">
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 class="text-2xl md:text-[32px] font-bold mb-6">Tại sao nên chọn chúng tôi?</h2>
+              <p class="opacity-90 mb-10">Chúng tôi không chỉ làm file, chúng tôi mang đến sự an tâm và kết quả học tập
+                tốt nhất cho bạn.</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-stack-lg">
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                    <span class="material-symbols-outlined">savings</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold">Giá sinh viên</h4>
+                    <p class="text-sm opacity-80">Mức giá cạnh tranh nhất thị trường.</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                    <span class="material-symbols-outlined">timer</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold">Đúng hạn</h4>
+                    <p class="text-sm opacity-80">Cam kết hoàn thành đúng deadline.</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                    <span class="material-symbols-outlined">history_edu</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold">Chỉnh sửa miễn phí</h4>
+                    <p class="text-sm opacity-80">Hỗ trợ fix đến khi hài lòng.</p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                    <span class="material-symbols-outlined">lock</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold">Bảo mật</h4>
+                    <p class="text-sm opacity-80">Mọi thông tin đều được giữ kín.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="relative hidden lg:block">
+              <img alt="Đội ngũ hỗ trợ học thuật đang làm việc" class="rounded-2xl shadow-2xl w-full object-cover"
+                src="https://picsum.photos/seed/team-office/800/560" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Cảm nhận khách hàng ===== -->
+    <section class="py-10 md:py-20 bg-background">
+      <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+        <div class="md:text-center mb-8 md:mb-16">
+          <h2 class="text-2xl md:text-[32px] font-bold text-on-surface mb-2 md:mb-4">Cảm nhận từ khách hàng</h2>
+          <p class="text-on-surface-variant">Hơn 5000+ đánh giá 5 sao từ sinh viên các trường đại học trên toàn quốc.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <div class="reveal bg-surface p-8 rounded-2xl card-shadow border border-surface-container">
+            <div class="flex gap-1 text-tertiary-container mb-4">
+              <span class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span>
+            </div>
+            <p class="italic text-on-surface-variant mb-6">"Slide thuyết trình môn Marketing được thiết kế đẹp hơn mình
+              mong đợi, thầy khen ngay trước lớp. Giao sớm hơn hạn 1 ngày."</p>
+            <div class="flex items-center gap-3">
+              <img alt="Ảnh đại diện khách hàng" class="w-10 h-10 rounded-full object-cover"
+                src="https://picsum.photos/seed/review-khanh-vy/80/80" />
+              <div>
+                <p class="text-sm font-semibold">Đặng Khánh Vy</p>
+                <p class="text-xs text-on-surface-variant">Sinh viên năm 3, ĐH Kinh tế Quốc dân</p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal bg-surface p-8 rounded-2xl card-shadow border border-surface-container">
+            <div class="flex gap-1 text-tertiary-container mb-4">
+              <span class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span>
+            </div>
+            <p class="italic text-on-surface-variant mb-6">"Nhờ căn chỉnh format luận văn đúng chuẩn trường nên mình
+              không phải sửa lại lần nào. Hỗ trợ qua Zalo phản hồi rất nhanh."</p>
+            <div class="flex items-center gap-3">
+              <img alt="Ảnh đại diện khách hàng" class="w-10 h-10 rounded-full object-cover"
+                src="https://picsum.photos/seed/review-tuan-kiet/80/80" />
+              <div>
+                <p class="text-sm font-semibold">Võ Tuấn Kiệt</p>
+                <p class="text-xs text-on-surface-variant">Học viên cao học, ĐH Bách Khoa TP.HCM</p>
+              </div>
+            </div>
+          </div>
+          <div class="reveal bg-surface p-8 rounded-2xl card-shadow border border-surface-container">
+            <div class="flex gap-1 text-tertiary-container mb-4">
+              <span class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined is-filled">star</span><span
+                class="material-symbols-outlined">star_half</span>
+            </div>
+            <p class="italic text-on-surface-variant mb-6">"CV thiết kế trên Canva rất chỉn chu, mình đậu phỏng vấn thực
+              tập ngay đợt đầu. Giá đúng là giá sinh viên."</p>
+            <div class="flex items-center gap-3">
+              <img alt="Ảnh đại diện khách hàng" class="w-10 h-10 rounded-full object-cover"
+                src="https://picsum.photos/seed/review-mai-chi/80/80" />
+              <div>
+                <p class="text-sm font-semibold">Bùi Mai Chi</p>
+                <p class="text-xs text-on-surface-variant">Sinh viên năm cuối, ĐH Ngoại Thương</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Cam kết bảo mật ===== -->
+    <section class="px-margin-mobile md:px-margin-desktop pb-10 md:pb-20 bg-background">
+      <div
+        class="reveal max-w-container-max mx-auto bg-surface-container-highest rounded-3xl p-6 md:p-8 flex items-center gap-4 border border-primary/10">
+        <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-primary-container/20 flex items-center justify-center">
+          <span class="material-symbols-outlined is-filled text-primary text-[32px]">verified</span>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-on-surface leading-tight">Cam kết bảo mật</h3>
+          <p class="text-sm text-on-surface-variant">Mọi thông tin cá nhân và tài liệu của bạn được xóa hoàn toàn sau 7
+            ngày bàn giao.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer
+    class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-surface-container-highest border-t border-outline-variant"
+    id="lien-he">
+    <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter mb-10 pt-6">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2 mb-4">
+          <img alt="Logo Báo cáo giá rẻ" class="h-8 w-8 object-contain" src="assets/logo.svg" />
+          <span class="text-xl font-bold text-primary">Dịch vụ Học thuật &amp; Văn phòng</span>
+        </div>
+        <p class="text-on-surface-variant text-sm max-w-sm mb-4">Nền tảng hỗ trợ học thuật hàng đầu Việt Nam, giúp sinh
+          viên và chuyên gia tối ưu hóa hiệu suất làm việc và đạt kết quả như mong đợi.</p>
+        <div class="flex gap-4">
+          <a aria-label="Website"
+            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
+            href="#"><span class="material-symbols-outlined">public</span></a>
+          <a aria-label="Email"
+            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
+            href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+          <a aria-label="Điện thoại"
+            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
+            href="#"><span class="material-symbols-outlined">call</span></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-bold mb-4">Liên kết nhanh</h4>
+        <ul class="space-y-2">
+          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="index.html">Trang
+              chủ</a></li>
+          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="services.html">Danh
+              sách dịch vụ</a></li>
+          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm"
+              href="service-detail.html">Bảng giá chi tiết</a></li>
+          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm"
+              href="admin-dashboard.html">Theo dõi đơn hàng</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold mb-4">Hỗ trợ</h4>
+        <ul class="space-y-2">
+          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Điều khoản dịch
+              vụ</a></li>
+          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Chính sách bảo
+              mật</a></li>
+          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Hỗ trợ kỹ
+              thuật</a></li>
+          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm"
+              href="service-detail.html#faq">Câu hỏi thường gặp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="max-w-container-max mx-auto border-t border-outline-variant/40 pt-6 pb-2 text-center text-sm text-on-surface-variant">
+      © <span data-year>2026</span> Báo cáo giá rẻ — Dịch vụ Học thuật &amp; Văn phòng.
+    </div>
+  </footer>
+
+  <!-- ===== Nút liên hệ nhanh (FAB) ===== -->
+  <div class="fixed bottom-24 md:bottom-8 right-4 z-40 flex flex-col items-end gap-3">
+    <a aria-label="Chat Zalo"
+      class="w-14 h-14 bg-[#0068ff] text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform active:scale-95"
+      href="#">
+      <span class="font-bold text-sm">Zalo</span>
+    </a>
+    <a aria-label="Chat trực tiếp"
+      class="w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform active:scale-95"
+      href="#">
+      <span class="material-symbols-outlined is-filled">chat</span>
+    </a>
+  </div>
+
+  <!-- ===== Bottom navigation (mobile) ===== -->
+  <nav
+    class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface flex justify-around items-center px-4 py-2 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)] h-20">
+    <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors"
+      data-nav-page="index.html" href="index.html">
+      <span class="material-symbols-outlined">home</span>
+      <span class="text-xs font-medium mt-1">Trang chủ</span>
+    </a>
+    <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors"
+      data-nav-page="services.html" href="services.html">
+      <span class="material-symbols-outlined">apps</span>
+      <span class="text-xs font-medium mt-1">Dịch vụ</span>
+    </a>
+    <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors"
+      data-nav-page="service-detail.html" href="service-detail.html">
+      <span class="material-symbols-outlined">assignment</span>
+      <span class="text-xs font-medium mt-1">Bảng giá</span>
+    </a>
+    <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors"
+      data-nav-page="admin-dashboard.html" href="admin-dashboard.html">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-xs font-medium mt-1">Cá nhân</span>
+    </a>
+  </nav>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản trị viên | Hệ thống dịch vụ học thuật</title>
+<meta name="description" content="Dashboard quản trị: doanh thu, biểu đồ, dịch vụ phổ biến và theo dõi đơn hàng."/>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="js/tailwind-config.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-surface overflow-x-hidden pb-24 md:pb-0">
+
+<!-- ===== Sidebar ===== -->
+<aside class="admin-sidebar h-full w-64 fixed left-0 top-0 bg-surface-container-low shadow-md flex flex-col py-stack-lg z-50" id="admin-sidebar">
+  <a class="px-6 mb-stack-lg flex items-center gap-2" href="index.html">
+    <img alt="Logo Báo cáo giá rẻ" class="h-9 w-9 object-contain" src="assets/logo.svg"/>
+    <span class="text-xl font-black text-primary">Báo cáo giá rẻ</span>
+  </a>
+  <div class="px-6 mb-8 flex items-center gap-3">
+    <img alt="Ảnh đại diện quản trị viên" class="w-10 h-10 rounded-full object-cover" src="https://picsum.photos/seed/admin-hoang/80/80"/>
+    <div>
+      <p class="text-sm font-semibold text-on-surface">Quản trị viên</p>
+      <p class="text-[12px] text-on-surface-variant">Hệ thống học thuật</p>
+    </div>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="flex items-center gap-3 px-6 py-3 text-primary font-bold border-r-4 border-primary bg-primary-container/10 transition-all" href="admin-dashboard.html">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span class="text-sm font-semibold">Dashboard</span>
+    </a>
+    <a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="#don-hang">
+      <span class="material-symbols-outlined">receipt_long</span>
+      <span class="text-sm font-semibold">Đơn hàng</span>
+    </a>
+    <a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="services.html">
+      <span class="material-symbols-outlined">construction</span>
+      <span class="text-sm font-semibold">Dịch vụ</span>
+    </a>
+    <a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="#">
+      <span class="material-symbols-outlined">group</span>
+      <span class="text-sm font-semibold">Khách hàng</span>
+    </a>
+    <a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="#">
+      <span class="material-symbols-outlined">settings</span>
+      <span class="text-sm font-semibold">Cài đặt</span>
+    </a>
+  </nav>
+  <div class="px-6 mt-auto">
+    <a class="w-full bg-secondary-container text-on-secondary-fixed py-3 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 tap-scale" href="services.html#dat-hang">
+      <span class="material-symbols-outlined text-[18px]">add</span>
+      Tạo đơn mới
+    </a>
+  </div>
+</aside>
+<div class="sidebar-backdrop md:hidden" id="sidebar-backdrop"></div>
+
+<!-- ===== Nội dung chính ===== -->
+<main class="md:ml-64 min-h-screen">
+  <!-- Header -->
+  <header class="site-header sticky top-0 z-40 bg-surface shadow-sm px-4 md:px-6 h-16 flex justify-between items-center">
+    <div class="flex items-center gap-4 flex-1">
+      <button aria-label="Mở menu quản trị" class="md:hidden text-on-surface-variant w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors" id="sidebar-toggle">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <div class="relative max-w-md w-full hidden sm:block">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+        <input class="w-full bg-surface-container border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20" id="order-search" placeholder="Tìm kiếm đơn hàng, khách hàng..." type="search"/>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 md:gap-6">
+      <button aria-label="Thông báo" class="relative text-on-surface-variant hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+      </button>
+      <div class="flex items-center gap-3 cursor-pointer group">
+        <div class="text-right hidden sm:block">
+          <p class="text-sm font-semibold text-on-surface group-hover:text-primary transition-colors">Admin Hoàng</p>
+          <p class="text-[12px] text-on-surface-variant">Quản trị hệ thống</p>
+        </div>
+        <img alt="Ảnh đại diện Admin Hoàng" class="w-9 h-9 rounded-lg object-cover ring-2 ring-primary/10" src="https://picsum.photos/seed/admin-hoang/72/72"/>
+      </div>
+    </div>
+  </header>
+
+  <div class="p-4 md:p-8 max-w-container-max mx-auto space-y-stack-lg">
+
+    <!-- Banner chào (mobile - từ dashboard_mobile) -->
+    <section class="md:hidden relative overflow-hidden rounded-2xl bg-primary-container p-6 text-on-primary-container shadow-lg">
+      <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+      <div class="relative z-10">
+        <p class="text-sm opacity-90 mb-1">Xin chào, <span class="font-bold">Minh Nhật</span></p>
+        <h2 class="text-2xl font-bold mb-1">Nâng tầm học thuật</h2>
+        <p class="text-sm mb-stack-md opacity-90">Hoàn thiện bài luận, báo cáo và đồ án với đội ngũ chuyên gia hàng đầu.</p>
+        <a class="inline-flex bg-secondary-container text-on-secondary-fixed text-sm font-semibold px-6 py-3 rounded-xl items-center gap-2 shadow-md tap-scale" href="services.html#dat-hang">
+          <span class="material-symbols-outlined">add_circle</span>
+          Đặt dịch vụ mới
+        </a>
+      </div>
+    </section>
+
+    <!-- Thống kê nhanh -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-gutter">
+      <div class="reveal bg-surface-container-lowest p-4 md:p-6 rounded-2xl card-shadow hover:scale-[1.02] transition-transform">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2.5 md:p-3 bg-primary-container/10 rounded-xl text-primary">
+            <span class="material-symbols-outlined is-filled">payments</span>
+          </div>
+          <span class="flex items-center text-primary text-xs md:text-sm font-semibold">
+            <span class="material-symbols-outlined text-[16px]">trending_up</span>+12.5%
+          </span>
+        </div>
+        <p class="text-on-surface-variant text-xs md:text-sm font-medium mb-1">Doanh thu</p>
+        <h3 class="text-lg md:text-2xl font-semibold text-on-surface" data-countup="125000000" data-money>0₫</h3>
+      </div>
+      <div class="reveal bg-surface-container-lowest p-4 md:p-6 rounded-2xl card-shadow hover:scale-[1.02] transition-transform">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2.5 md:p-3 bg-secondary-container/10 rounded-xl text-secondary">
+            <span class="material-symbols-outlined is-filled">shopping_cart</span>
+          </div>
+          <span class="flex items-center text-primary text-xs md:text-sm font-semibold">
+            <span class="material-symbols-outlined text-[16px]">trending_up</span>+8%
+          </span>
+        </div>
+        <p class="text-on-surface-variant text-xs md:text-sm font-medium mb-1">Đơn hàng mới</p>
+        <h3 class="text-lg md:text-2xl font-semibold text-on-surface" data-countup="48">0</h3>
+      </div>
+      <div class="reveal bg-surface-container-lowest p-4 md:p-6 rounded-2xl card-shadow hover:scale-[1.02] transition-transform">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2.5 md:p-3 bg-tertiary-container/20 rounded-xl text-tertiary">
+            <span class="material-symbols-outlined is-filled">task_alt</span>
+          </div>
+          <span class="flex items-center text-primary text-xs md:text-sm font-semibold">
+            <span class="material-symbols-outlined text-[16px]">trending_up</span>+15%
+          </span>
+        </div>
+        <p class="text-on-surface-variant text-xs md:text-sm font-medium mb-1">Hoàn thành</p>
+        <h3 class="text-lg md:text-2xl font-semibold text-on-surface" data-countup="156">0</h3>
+      </div>
+      <div class="reveal bg-surface-container-lowest p-4 md:p-6 rounded-2xl card-shadow hover:scale-[1.02] transition-transform">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2.5 md:p-3 bg-outline-variant/20 rounded-xl text-on-surface">
+            <span class="material-symbols-outlined is-filled">person</span>
+          </div>
+          <span class="flex items-center text-error text-xs md:text-sm font-semibold">
+            <span class="material-symbols-outlined text-[16px]">trending_down</span>-2%
+          </span>
+        </div>
+        <p class="text-on-surface-variant text-xs md:text-sm font-medium mb-1">Khách hàng</p>
+        <h3 class="text-lg md:text-2xl font-semibold text-on-surface" data-countup="1240">0</h3>
+      </div>
+    </section>
+
+    <!-- Lối tắt nhanh (mobile) -->
+    <section class="md:hidden">
+      <h3 class="text-xl font-bold mb-stack-md">Lối tắt nhanh</h3>
+      <div class="flex overflow-x-auto pb-2 gap-stack-md hide-scrollbar">
+        <a class="flex-shrink-0 flex flex-col items-center gap-2 group" href="services.html">
+          <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center group-active:scale-90 transition-all border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-3xl">history_edu</span>
+          </div>
+          <span class="text-xs font-medium">Viết lách</span>
+        </a>
+        <a class="flex-shrink-0 flex flex-col items-center gap-2 group" href="services.html">
+          <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center group-active:scale-90 transition-all border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-3xl">translate</span>
+          </div>
+          <span class="text-xs font-medium">Dịch thuật</span>
+        </a>
+        <a class="flex-shrink-0 flex flex-col items-center gap-2 group" href="service-detail.html">
+          <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center group-active:scale-90 transition-all border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-3xl">analytics</span>
+          </div>
+          <span class="text-xs font-medium">Xử lý dữ liệu</span>
+        </a>
+        <a class="flex-shrink-0 flex flex-col items-center gap-2 group" href="services.html">
+          <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center group-active:scale-90 transition-all border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-3xl">edit_document</span>
+          </div>
+          <span class="text-xs font-medium">Chỉnh sửa</span>
+        </a>
+        <a class="flex-shrink-0 flex flex-col items-center gap-2 group" href="services.html">
+          <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center group-active:scale-90 transition-all border border-outline-variant/20">
+            <span class="material-symbols-outlined text-primary text-3xl">co_present</span>
+          </div>
+          <span class="text-xs font-medium">Slide</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Biểu đồ -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+      <div class="reveal lg:col-span-2 bg-surface-container-lowest p-4 md:p-6 rounded-2xl card-shadow">
+        <div class="flex justify-between items-center mb-6 md:mb-8 gap-3">
+          <h4 class="text-xl font-semibold text-on-surface">Biểu đồ doanh thu</h4>
+          <select class="bg-surface-container border-none rounded-lg text-sm px-3 py-1.5 focus:ring-1 focus:ring-primary" id="chart-range">
+            <option value="week">7 ngày qua</option>
+            <option value="month">30 ngày qua</option>
+            <option value="year">Năm nay</option>
+          </select>
+        </div>
+        <div class="relative">
+          <div class="h-56 md:h-64 flex items-end justify-between gap-2 md:gap-3 px-1 border-b border-outline-variant/40" id="revenue-chart"></div>
+          <div class="chart-tooltip" id="chart-tooltip"></div>
+        </div>
+      </div>
+      <div class="reveal bg-surface-container-lowest p-4 md:p-6 rounded-2xl card-shadow">
+        <h4 class="text-xl font-semibold text-on-surface mb-6">Dịch vụ phổ biến</h4>
+        <div class="space-y-6" id="popular-services"></div>
+      </div>
+    </section>
+
+    <!-- Bảng đơn hàng -->
+    <section class="reveal bg-surface-container-lowest rounded-2xl card-shadow overflow-hidden scroll-mt-20" id="don-hang">
+      <div class="px-4 md:px-6 py-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 border-b border-outline-variant/30">
+        <h4 class="text-xl font-semibold text-on-surface">Đơn hàng mới nhất</h4>
+        <div class="flex flex-wrap gap-2">
+          <button class="px-3 py-1 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container transition-colors" data-status-filter="all" type="button">Tất cả</button>
+          <button class="px-3 py-1 rounded-full text-xs font-semibold bg-surface-container-high text-on-surface-variant transition-colors" data-status-filter="pending" type="button">Chờ duyệt</button>
+          <button class="px-3 py-1 rounded-full text-xs font-semibold bg-surface-container-high text-on-surface-variant transition-colors" data-status-filter="processing" type="button">Đang xử lý</button>
+          <button class="px-3 py-1 rounded-full text-xs font-semibold bg-surface-container-high text-on-surface-variant transition-colors" data-status-filter="done" type="button">Hoàn thành</button>
+          <button class="px-3 py-1 rounded-full text-xs font-semibold bg-surface-container-high text-on-surface-variant transition-colors" data-status-filter="cancelled" type="button">Đã hủy</button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[720px]">
+          <thead>
+            <tr class="bg-surface-container-low text-on-surface-variant">
+              <th class="px-6 py-4 text-sm font-semibold">Mã đơn</th>
+              <th class="px-6 py-4 text-sm font-semibold">Khách hàng</th>
+              <th class="px-6 py-4 text-sm font-semibold">Dịch vụ</th>
+              <th class="px-6 py-4 text-sm font-semibold">Deadline</th>
+              <th class="px-6 py-4 text-sm font-semibold">Trạng thái</th>
+              <th class="px-6 py-4 text-sm font-semibold">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/20" id="orders-tbody"></tbody>
+        </table>
+        <div class="flex-col items-center text-center py-12" id="orders-empty" style="display:none">
+          <span class="material-symbols-outlined text-outline text-[40px] mb-2">inbox</span>
+          <p class="font-semibold">Không có đơn hàng khớp bộ lọc</p>
+          <p class="text-sm text-on-surface-variant">Thử đổi trạng thái hoặc từ khóa tìm kiếm.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer nhỏ -->
+    <footer class="flex flex-col sm:flex-row items-center justify-between gap-3 py-4 text-sm text-on-surface-variant">
+      <p>© <span data-year>2026</span> Báo cáo giá rẻ — Hệ thống quản trị.</p>
+      <div class="flex gap-6">
+        <a class="hover:text-primary transition-colors" href="#">Điều khoản</a>
+        <a class="hover:text-primary transition-colors" href="#">Hỗ trợ kỹ thuật</a>
+        <a class="hover:text-primary transition-colors" href="index.html#lien-he">Liên hệ</a>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<!-- ===== Bottom navigation (mobile) ===== -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-40 bg-surface flex justify-around items-center px-4 py-2 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)] h-20">
+  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" data-nav-page="index.html" href="index.html">
+    <span class="material-symbols-outlined">home</span>
+    <span class="text-xs font-medium mt-1">Trang chủ</span>
+  </a>
+  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" data-nav-page="services.html" href="services.html">
+    <span class="material-symbols-outlined">apps</span>
+    <span class="text-xs font-medium mt-1">Dịch vụ</span>
+  </a>
+  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" data-nav-page="service-detail.html" href="service-detail.html">
+    <span class="material-symbols-outlined">assignment</span>
+    <span class="text-xs font-medium mt-1">Bảng giá</span>
+  </a>
+  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" data-nav-page="admin-dashboard.html" href="admin-dashboard.html">
+    <span class="material-symbols-outlined">person</span>
+    <span class="text-xs font-medium mt-1">Cá nhân</span>
+  </a>
+</nav>
+
+<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
