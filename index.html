@@ -31,13 +31,12 @@
       <nav class="hidden md:flex items-center gap-stack-lg">
         <a class="text-primary font-bold border-b-2 border-primary pb-1" href="index.html">Trang chủ</a>
         <a class="text-on-surface-variant hover:text-primary transition-colors" href="services.html">Dịch vụ</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="service-detail.html">Bảng giá</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="admin-dashboard.html">Quản trị</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors hidden" data-auth-admin-only href="admin-dashboard.html">Quản trị</a>
         <a class="text-on-surface-variant hover:text-primary transition-colors" href="#lien-he">Liên hệ</a>
       </nav>
       <div class="flex items-center gap-3">
         <a class="hidden md:block text-primary font-semibold hover:underline transition-all"
-          href="admin-dashboard.html">Đăng nhập</a>
+          href="login.html" data-auth-action>Đăng nhập</a>
         <a class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-primary/20 tap-scale hover:opacity-90 transition-all"
           href="services.html#dat-hang">Đặt dịch vụ</a>
         <button aria-expanded="false" aria-label="Mở menu"
@@ -60,8 +59,7 @@
     <nav class="flex flex-col items-center gap-6 pt-10 text-2xl font-bold">
       <a class="menu-link text-primary" href="index.html">Trang chủ</a>
       <a class="menu-link text-on-surface hover:text-primary transition-colors" href="services.html">Dịch vụ</a>
-      <a class="menu-link text-on-surface hover:text-primary transition-colors" href="service-detail.html">Bảng giá</a>
-      <a class="menu-link text-on-surface hover:text-primary transition-colors" href="admin-dashboard.html">Quản trị</a>
+      <a class="menu-link text-on-surface hover:text-primary transition-colors hidden" data-auth-admin-only href="admin-dashboard.html">Quản trị</a>
       <a class="menu-link text-on-surface hover:text-primary transition-colors" href="#lien-he">Liên hệ</a>
       <a class="menu-link bg-secondary-container text-on-secondary-fixed px-8 py-3 rounded-2xl text-lg shadow-lg tap-scale"
         href="services.html#dat-hang">Đặt dịch vụ ngay</a>
@@ -90,18 +88,7 @@
             <a class="bg-tertiary-container text-on-tertiary-container px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] active:scale-95 inline-block"
               href="services.html#dat-hang">Đặt dịch vụ ngay</a>
             <a class="border-2 border-primary text-primary px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary/5 transition-all inline-block"
-              href="service-detail.html">Xem bảng giá</a>
-          </div>
-          <div class="flex items-center gap-4 pt-6">
-            <div class="flex -space-x-3">
-              <img alt="Sinh viên đã tin dùng dịch vụ" class="w-10 h-10 rounded-full border-2 border-white object-cover"
-                src="https://picsum.photos/seed/sv-hero-1/80/80" />
-              <img alt="Sinh viên đã tin dùng dịch vụ" class="w-10 h-10 rounded-full border-2 border-white object-cover"
-                src="https://picsum.photos/seed/sv-hero-2/80/80" />
-              <img alt="Sinh viên đã tin dùng dịch vụ" class="w-10 h-10 rounded-full border-2 border-white object-cover"
-                src="https://picsum.photos/seed/sv-hero-3/80/80" />
-            </div>
-            <p class="text-sm text-on-surface-variant font-medium">10k+ Sinh viên đã tin dùng</p>
+              href="services.html">Xem dịch vụ</a>
           </div>
         </div>
         <div class="relative">
@@ -159,7 +146,7 @@
       <!-- Mobile: cuộn ngang -->
       <div class="md:hidden flex overflow-x-auto hide-scrollbar gap-4 px-margin-mobile pb-4">
         <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div class="w-12 h-12 bg-primary-container/10 text-primary rounded-xl flex items-center justify-center mb-4">
             <span class="material-symbols-outlined text-[32px]">description</span>
           </div>
@@ -167,7 +154,7 @@
           <p class="text-[12px] text-on-surface-variant">Từ 20k/trang</p>
         </a>
         <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-12 h-12 bg-secondary-container/10 text-secondary rounded-xl flex items-center justify-center mb-4">
             <span class="material-symbols-outlined text-[32px]">slideshow</span>
@@ -176,7 +163,7 @@
           <p class="text-[12px] text-on-surface-variant">Từ 50k/bài</p>
         </a>
         <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-12 h-12 bg-tertiary-container/10 text-tertiary rounded-xl flex items-center justify-center mb-4">
             <span class="material-symbols-outlined text-[32px]">palette</span>
@@ -185,7 +172,7 @@
           <p class="text-[12px] text-on-surface-variant">Banner, CV, v.v.</p>
         </a>
         <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div class="w-12 h-12 bg-primary-container/10 text-primary rounded-xl flex items-center justify-center mb-4">
             <span class="material-symbols-outlined text-[32px]">edit_note</span>
           </div>
@@ -193,7 +180,7 @@
           <p class="text-[12px] text-on-surface-variant">Từ 150k/bài</p>
         </a>
         <a class="flex-none w-44 bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/30 tap-scale"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-12 h-12 bg-secondary-container/10 text-secondary rounded-xl flex items-center justify-center mb-4">
             <span class="material-symbols-outlined text-[32px]">school</span>
@@ -206,7 +193,7 @@
       <!-- Desktop: lưới 6 thẻ -->
       <div class="hidden md:grid max-w-container-max mx-auto px-margin-desktop grid-cols-2 lg:grid-cols-3 gap-gutter">
         <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
             <span class="material-symbols-outlined text-[32px]">description</span>
@@ -221,7 +208,7 @@
           </div>
         </a>
         <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-14 h-14 bg-secondary-fixed/30 rounded-xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-white transition-colors">
             <span class="material-symbols-outlined text-[32px]">co_present</span>
@@ -230,13 +217,13 @@
           <p class="text-on-surface-variant mb-6">Thiết kế slide thuyết trình chuyên nghiệp, hiệu ứng mượt mà, nội dung
             cô đọng.</p>
           <div class="flex justify-between items-center border-t border-surface-container pt-4">
-            <span class="text-sm text-on-surface-variant italic">Giá từ 100.000đ</span>
+            <span class="text-sm text-on-surface-variant italic">Giá từ 4.000đ/slide</span>
             <span
               class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
           </div>
         </a>
         <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-14 h-14 bg-tertiary-fixed/30 rounded-xl flex items-center justify-center text-tertiary mb-6 group-hover:bg-tertiary group-hover:text-white transition-colors">
             <span class="material-symbols-outlined text-[32px]">palette</span>
@@ -251,7 +238,7 @@
           </div>
         </a>
         <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
             <span class="material-symbols-outlined text-[32px]">edit_note</span>
@@ -266,7 +253,7 @@
           </div>
         </a>
         <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-14 h-14 bg-secondary-fixed/30 rounded-xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-white transition-colors">
             <span class="material-symbols-outlined text-[32px]">badge</span>
@@ -281,7 +268,7 @@
           </div>
         </a>
         <a class="reveal bg-surface-container-lowest p-8 rounded-2xl card-shadow border border-surface-container hover:border-primary/30 transition-all group"
-          href="service-detail.html">
+          href="services.html#dat-hang">
           <div
             class="w-14 h-14 bg-tertiary-fixed/30 rounded-xl flex items-center justify-center text-tertiary mb-6 group-hover:bg-tertiary group-hover:text-white transition-colors">
             <span class="material-symbols-outlined text-[32px]">school</span>
@@ -460,75 +447,6 @@
       </div>
     </section>
 
-    <!-- ===== Cảm nhận khách hàng ===== -->
-    <section class="py-10 md:py-20 bg-background">
-      <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-        <div class="md:text-center mb-8 md:mb-16">
-          <h2 class="text-2xl md:text-[32px] font-bold text-on-surface mb-2 md:mb-4">Cảm nhận từ khách hàng</h2>
-          <p class="text-on-surface-variant">Hơn 5000+ đánh giá 5 sao từ sinh viên các trường đại học trên toàn quốc.
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-          <div class="reveal bg-surface p-8 rounded-2xl card-shadow border border-surface-container">
-            <div class="flex gap-1 text-tertiary-container mb-4">
-              <span class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span>
-            </div>
-            <p class="italic text-on-surface-variant mb-6">"Slide thuyết trình môn Marketing được thiết kế đẹp hơn mình
-              mong đợi, thầy khen ngay trước lớp. Giao sớm hơn hạn 1 ngày."</p>
-            <div class="flex items-center gap-3">
-              <img alt="Ảnh đại diện khách hàng" class="w-10 h-10 rounded-full object-cover"
-                src="https://picsum.photos/seed/review-khanh-vy/80/80" />
-              <div>
-                <p class="text-sm font-semibold">Đặng Khánh Vy</p>
-                <p class="text-xs text-on-surface-variant">Sinh viên năm 3, ĐH Kinh tế Quốc dân</p>
-              </div>
-            </div>
-          </div>
-          <div class="reveal bg-surface p-8 rounded-2xl card-shadow border border-surface-container">
-            <div class="flex gap-1 text-tertiary-container mb-4">
-              <span class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span>
-            </div>
-            <p class="italic text-on-surface-variant mb-6">"Nhờ căn chỉnh format luận văn đúng chuẩn trường nên mình
-              không phải sửa lại lần nào. Hỗ trợ qua Zalo phản hồi rất nhanh."</p>
-            <div class="flex items-center gap-3">
-              <img alt="Ảnh đại diện khách hàng" class="w-10 h-10 rounded-full object-cover"
-                src="https://picsum.photos/seed/review-tuan-kiet/80/80" />
-              <div>
-                <p class="text-sm font-semibold">Võ Tuấn Kiệt</p>
-                <p class="text-xs text-on-surface-variant">Học viên cao học, ĐH Bách Khoa TP.HCM</p>
-              </div>
-            </div>
-          </div>
-          <div class="reveal bg-surface p-8 rounded-2xl card-shadow border border-surface-container">
-            <div class="flex gap-1 text-tertiary-container mb-4">
-              <span class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined is-filled">star</span><span
-                class="material-symbols-outlined">star_half</span>
-            </div>
-            <p class="italic text-on-surface-variant mb-6">"CV thiết kế trên Canva rất chỉn chu, mình đậu phỏng vấn thực
-              tập ngay đợt đầu. Giá đúng là giá sinh viên."</p>
-            <div class="flex items-center gap-3">
-              <img alt="Ảnh đại diện khách hàng" class="w-10 h-10 rounded-full object-cover"
-                src="https://picsum.photos/seed/review-mai-chi/80/80" />
-              <div>
-                <p class="text-sm font-semibold">Bùi Mai Chi</p>
-                <p class="text-xs text-on-surface-variant">Sinh viên năm cuối, ĐH Ngoại Thương</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- ===== Cam kết bảo mật ===== -->
     <section class="px-margin-mobile md:px-margin-desktop pb-10 md:pb-20 bg-background">
@@ -550,7 +468,7 @@
   <footer
     class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-surface-container-highest border-t border-outline-variant"
     id="lien-he">
-    <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter mb-10 pt-6">
+    <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-3 gap-gutter mb-10 pt-6">
       <div class="md:col-span-2">
         <div class="flex items-center gap-2 mb-4">
           <img alt="Logo Báo cáo giá rẻ" class="h-8 w-8 object-contain" src="assets/logo.svg" />
@@ -578,22 +496,9 @@
           <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="services.html">Danh
               sách dịch vụ</a></li>
           <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm"
-              href="service-detail.html">Bảng giá chi tiết</a></li>
+              href="services.html#dat-hang">Đặt dịch vụ</a></li>
           <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm"
               href="admin-dashboard.html">Theo dõi đơn hàng</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="font-bold mb-4">Hỗ trợ</h4>
-        <ul class="space-y-2">
-          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Điều khoản dịch
-              vụ</a></li>
-          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Chính sách bảo
-              mật</a></li>
-          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Hỗ trợ kỹ
-              thuật</a></li>
-          <li><a class="text-on-surface-variant hover:text-primary transition-colors text-sm"
-              href="service-detail.html#faq">Câu hỏi thường gặp</a></li>
         </ul>
       </div>
     </div>
@@ -631,17 +536,20 @@
       <span class="text-xs font-medium mt-1">Dịch vụ</span>
     </a>
     <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors"
-      data-nav-page="service-detail.html" href="service-detail.html">
-      <span class="material-symbols-outlined">assignment</span>
-      <span class="text-xs font-medium mt-1">Bảng giá</span>
+      data-nav-page="services.html#dat-hang" href="services.html#dat-hang">
+      <span class="material-symbols-outlined">add_shopping_cart</span>
+      <span class="text-xs font-medium mt-1">Đặt ngay</span>
     </a>
-    <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors"
-      data-nav-page="admin-dashboard.html" href="admin-dashboard.html">
-      <span class="material-symbols-outlined">person</span>
-      <span class="text-xs font-medium mt-1">Cá nhân</span>
+    <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors hidden"
+      data-auth-admin-only data-nav-page="admin-dashboard.html" href="admin-dashboard.html">
+      <span class="material-symbols-outlined">admin_panel_settings</span>
+      <span class="text-xs font-medium mt-1">Quản trị</span>
     </a>
   </nav>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/main.js"></script>
 </body>
 

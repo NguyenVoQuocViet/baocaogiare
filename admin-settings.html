@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cài đặt | Báo cáo giá rẻ</title>
+<meta name="description" content="Cài đặt hồ sơ quản trị viên và tài khoản."/>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="js/tailwind-config.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-surface overflow-x-hidden pb-24 md:pb-0">
+
+<!-- ===== Sidebar ===== -->
+<aside class="admin-sidebar h-full w-64 fixed left-0 top-0 bg-surface-container-low shadow-md flex flex-col py-stack-lg z-50" id="admin-sidebar">
+  <a class="px-6 mb-stack-lg flex items-center gap-2" href="index.html">
+    <img alt="Logo Báo cáo giá rẻ" class="h-9 w-9 object-contain" src="assets/logo.svg"/>
+    <span class="text-xl font-black text-primary">Báo cáo giá rẻ</span>
+  </a>
+  <div class="px-6 mb-8 flex items-center gap-3">
+    <img alt="Ảnh đại diện quản trị viên" class="w-10 h-10 rounded-full object-cover" src="https://picsum.photos/seed/admin-hoang/80/80"/>
+    <div>
+      <p class="text-sm font-semibold text-on-surface" data-auth-name>Quản trị viên</p>
+      <p class="text-[12px] text-on-surface-variant">Hệ thống học thuật</p>
+    </div>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="admin-dashboard.html">
+      <span class="material-symbols-outlined">dashboard</span><span class="text-sm font-semibold">Dashboard</span>
+    </a>
+    <a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="admin-orders.html">
+      <span class="material-symbols-outlined">receipt_long</span><span class="text-sm font-semibold">Đơn hàng</span>
+    </a>
+    <a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="services.html">
+      <span class="material-symbols-outlined">construction</span><span class="text-sm font-semibold">Dịch vụ</span>
+    </a>
+    <a class="flex items-center gap-3 px-6 py-3 text-on-surface-variant hover:bg-surface-variant/50 hover:translate-x-1 transition-all duration-200" href="admin-customers.html">
+      <span class="material-symbols-outlined">group</span><span class="text-sm font-semibold">Khách hàng</span>
+    </a>
+    <a class="flex items-center gap-3 px-6 py-3 text-primary font-bold border-r-4 border-primary bg-primary-container/10 transition-all" href="admin-settings.html">
+      <span class="material-symbols-outlined">settings</span><span class="text-sm font-semibold">Cài đặt</span>
+    </a>
+  </nav>
+  <div class="px-6 mt-auto">
+    <a class="w-full bg-secondary-container text-on-secondary-fixed py-3 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 tap-scale" href="services.html#dat-hang">
+      <span class="material-symbols-outlined text-[18px]">add</span> Tạo đơn mới
+    </a>
+  </div>
+</aside>
+<div class="sidebar-backdrop md:hidden" id="sidebar-backdrop"></div>
+
+<!-- ===== Nội dung chính ===== -->
+<main class="md:ml-64 min-h-screen">
+  <header class="site-header sticky top-0 z-40 bg-surface shadow-sm px-4 md:px-6 h-16 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <button aria-label="Mở menu quản trị" class="md:hidden text-on-surface-variant w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors" id="sidebar-toggle">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <h2 class="font-bold text-lg">Cài đặt</h2>
+    </div>
+    <div class="flex items-center gap-4 md:gap-6">
+      <div class="relative">
+        <button id="notif-bell" aria-label="Thông báo" class="relative text-on-surface-variant hover:text-primary transition-colors flex items-center">
+          <span class="material-symbols-outlined">notifications</span>
+          <span id="notif-dot" class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+        </button>
+        <div id="notif-menu" class="notif-menu bg-surface rounded-2xl card-shadow border border-outline-variant/20 overflow-hidden">
+          <div class="px-4 py-3 border-b border-outline-variant/20 flex items-center justify-between">
+            <p class="font-bold text-sm">Thông báo</p>
+            <span class="text-xs text-on-surface-variant" data-notif-count>—</span>
+          </div>
+          <div class="max-h-80 overflow-y-auto hide-scrollbar" data-notif-list></div>
+          <a href="admin-orders.html" class="block text-center text-sm font-semibold text-primary py-2.5 border-t border-outline-variant/20 hover:bg-surface-variant/40 transition-colors">Xem tất cả đơn hàng</a>
+        </div>
+      </div>
+      <a href="login.html" data-auth-action class="flex items-center gap-1.5 text-sm font-semibold text-on-surface-variant hover:text-error transition-colors" title="Đăng xuất">
+        <span class="material-symbols-outlined text-[20px]">logout</span>
+        <span class="hidden sm:inline">Đăng xuất</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="p-4 md:p-8 max-w-2xl mx-auto space-y-stack-lg">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Cài đặt tài khoản</h1>
+      <p class="text-on-surface-variant mt-1">Cập nhật thông tin hồ sơ của bạn.</p>
+    </div>
+
+    <!-- Hồ sơ -->
+    <form id="settings-form" novalidate class="bg-surface-container-lowest rounded-2xl card-shadow p-5 md:p-6 space-y-5">
+      <h3 class="text-lg font-bold">Thông tin hồ sơ</h3>
+      <div class="space-y-2">
+        <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="settings-name">Họ và tên</label>
+        <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-3" id="settings-name" type="text" placeholder="Họ và tên"/>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="settings-phone">Số điện thoại</label>
+          <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-3" id="settings-phone" type="tel" placeholder="090 123 4567"/>
+        </div>
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="settings-university">Trường / Đơn vị</label>
+          <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-3" id="settings-university" type="text" placeholder="Trường đại học"/>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="settings-email">Email (không thể thay đổi)</label>
+        <input class="w-full bg-surface-container border border-outline-variant/40 rounded-2xl px-4 py-3 text-on-surface-variant cursor-not-allowed" id="settings-email" type="email" readonly/>
+      </div>
+      <div class="flex items-center gap-2 text-sm">
+        <span class="text-on-surface-variant">Vai trò:</span>
+        <span class="font-bold text-primary" id="settings-role">—</span>
+      </div>
+      <button type="submit" class="bg-primary text-on-primary font-semibold px-6 py-3 rounded-2xl flex items-center justify-center gap-2 tap-scale shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
+        <span class="material-symbols-outlined text-[20px]">save</span> Lưu thay đổi
+      </button>
+    </form>
+
+    <!-- Đăng xuất -->
+    <div class="bg-surface-container-lowest rounded-2xl card-shadow p-5 md:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <h3 class="text-lg font-bold">Đăng xuất</h3>
+        <p class="text-sm text-on-surface-variant">Kết thúc phiên làm việc trên thiết bị này.</p>
+      </div>
+      <button type="button" id="settings-signout" class="border-2 border-error text-error font-semibold px-6 py-3 rounded-2xl flex items-center justify-center gap-2 tap-scale hover:bg-error/5 transition-colors">
+        <span class="material-symbols-outlined text-[20px]">logout</span> Đăng xuất
+      </button>
+    </div>
+  </div>
+</main>
+
+<!-- ===== Bottom navigation (mobile) ===== -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-40 bg-surface flex justify-around items-center px-4 py-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] h-20">
+  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" href="admin-dashboard.html">
+    <span class="material-symbols-outlined">dashboard</span><span class="text-xs font-medium mt-1">Dashboard</span>
+  </a>
+  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" href="admin-orders.html">
+    <span class="material-symbols-outlined">receipt_long</span><span class="text-xs font-medium mt-1">Đơn hàng</span>
+  </a>
+  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" href="admin-customers.html">
+    <span class="material-symbols-outlined">group</span><span class="text-xs font-medium mt-1">Khách hàng</span>
+  </a>
+  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors text-primary" href="admin-settings.html">
+    <span class="material-symbols-outlined is-filled">settings</span><span class="text-xs font-medium mt-1">Cài đặt</span>
+  </a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin-common.js"></script>
+<script src="js/main.js"></script>
+<script src="js/admin-settings.js"></script>
+</body>
+</html>

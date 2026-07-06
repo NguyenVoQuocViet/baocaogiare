@@ -1,10 +1,60 @@
 /* ============================================================
    order.js — Đặt dịch vụ: tính giá tự động, form 3 bước,
    tải file đính kèm, mã giảm giá. Dùng cho services.html
-   và service-detail.html (form đặt nhanh).
+   trong services.html.
    ============================================================ */
 (function () {
   "use strict";
+
+  const sb = window.sb;
+  const toast = window.showToast || function (m) { alert(m); };
+
+  // Lấy user đang đăng nhập (hoặc null)
+  async function getSessionUser() {
+    if (!sb) return null;
+    const { data } = await sb.auth.getUser();
+    return (data && data.user) || null;
+  }
+
+  // Đẩy một đơn hàng lên Supabase, trả về bản ghi đã tạo (hoặc ném lỗi)
+  async function insertOrder(row) {
+    const { data, error } = await sb.from("orders").insert([row]).select().single();
+    if (error) throw error;
+    return data;
+  }
+
+  /* ---------- Tải tệp lên Supabase Storage ---------- */
+  const BUCKET = "academic-files";
+
+  // Tạo tên file độc nhất, an toàn cho Storage (bỏ dấu, thêm mốc thời gian)
+  const uniqueFileName = (name) => {
+    const dot = name.lastIndexOf(".");
+    const ext = dot > -1 ? name.slice(dot).toLowerCase() : "";
+    const base = (dot > -1 ? name.slice(0, dot) : name)
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "") // bỏ dấu tiếng Việt
+      .replace(/đ/gi, "d")
+      .replace(/[^\w-]+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "")
+      .toLowerCase() || "tep";
+    return Date.now() + "_" + base + ext;
+  };
+
+  // Upload 1 file, trả về Public URL (ném lỗi nếu thất bại)
+  async function uploadFile(file) {
+    const path = uniqueFileName(file.name);
+    const { error } = await sb.storage.from(BUCKET).upload(path, file, {
+      cacheControl: "3600",
+      upsert: false
+    });
+    if (error) throw error;
+    const { data: urlData } = sb.storage.from(BUCKET).getPublicUrl(path);
+    return urlData.publicUrl;
+  }
+
+  // Sinh mã đơn hiển thị từ id thật của DB
+  const orderCode = (id) => "ORD-" + String(id).padStart(4, "0");
 
   const VND = (n) => new Intl.NumberFormat("vi-VN").format(Math.max(0, Math.round(n))) + "đ";
   const RUSH_RATE = 0.3; // Phụ phí hỏa tốc +30% khi deadline < 3 ngày
@@ -101,6 +151,18 @@
     });
     renderPricing();
 
+    /* ----- Bấm "Đặt ngay" ở thẻ dịch vụ → tự chọn đúng dịch vụ ----- */
+    document.querySelectorAll("[data-service]").forEach((link) => {
+      link.addEventListener("click", () => {
+        const val = link.dataset.service;
+        const opt = Array.from(serviceSelect.options).find((o) => o.value === val);
+        if (opt) {
+          serviceSelect.value = val;
+          renderPricing();
+        }
+      });
+    });
+
     /* ----- Điều hướng bước ----- */
     const validateStep = (idx) => {
       const stepEl = steps[idx - 1];
@@ -163,26 +225,119 @@
       set("review-files", fileCount ? fileCount + " tệp đính kèm" : "Không có tệp");
     };
 
+    const showSuccess = (code) => {
+      const codeEl = document.getElementById("success-code");
+      if (codeEl) codeEl.textContent = code;
+      form.classList.add("hidden");
+      const bar = document.getElementById("order-bottom-bar");
+      if (bar) bar.classList.add("hidden");
+      const stepsHead = document.getElementById("order-steps");
+      if (stepsHead) stepsHead.classList.add("hidden");
+      const success = document.getElementById("order-success");
+      if (success) {
+        success.classList.remove("hidden");
+        success.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    };
+
+    // Gửi đơn hàng lên Supabase (bước cuối)
+    const submitOrder = async () => {
+      // Bắt buộc đăng nhập trước khi đặt dịch vụ
+      const user = await getSessionUser();
+      if (!user) {
+        toast("Vui lòng đăng nhập để hoàn tất đặt dịch vụ.", "info");
+        const next = encodeURIComponent((location.pathname.split("/").pop() || "services.html") + "#dat-hang");
+        setTimeout(() => (window.location.href = "login.html?next=" + next), 900);
+        return;
+      }
+
+      const p = getPricing();
+      const serviceText = serviceSelect.options[serviceSelect.selectedIndex].text;
+      const qty = qtyInput ? qtyInput.value : "1";
+      const unit = qtyUnit ? qtyUnit.textContent : "";
+      const note = (document.getElementById("order-note") || {}).value || "";
+      const name = (document.getElementById("customer-name") || {}).value || "";
+      const phone = (document.getElementById("customer-phone") || {}).value || "";
+      const method = form.querySelector('input[name="payment"]:checked');
+      const payLabel = method ? method.dataset.label : "";
+      const fileNames = fileStore.map((f) => f.name).join(", ");
+
+      const details = [
+        "Số lượng: " + qty + " " + unit,
+        payLabel ? "Thanh toán: " + payLabel : "",
+        name || phone ? "Liên hệ: " + [name, phone].filter(Boolean).join(" - ") : "",
+        p.promo && p.code ? "Mã giảm giá: " + p.code + " (-" + VND(p.discount) + ")" : "",
+        p.rush > 0 ? "Phụ phí hỏa tốc: +" + VND(p.rush) : "",
+        fileNames ? "Tệp đính kèm: " + fileNames : "",
+        "Ghi chú: " + note
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      const row = {
+        user_id: user.id,
+        service_type: serviceText,
+        deadline: deadlineInput && deadlineInput.value ? deadlineInput.value : null,
+        details: details,
+        file_url: null,
+        total_price: Math.round(p.total),
+        status: "pending"
+      };
+
+      btnNext.classList.add("is-busy");
+      const label = btnLabel ? btnLabel.textContent : "";
+      const restore = () => {
+        btnNext.classList.remove("is-busy");
+        if (btnLabel) btnLabel.textContent = label;
+      };
+
+      // 1) Tải tệp đính kèm lên Storage TRƯỚC (nếu có). Lỗi tải file -> dừng, không tạo đơn.
+      if (fileStore.length) {
+        if (btnLabel) btnLabel.textContent = "Đang tải tệp...";
+        try {
+          const urls = [];
+          for (const f of fileStore) urls.push(await uploadFile(f));
+          row.file_url = urls.join("\n");
+        } catch (err) {
+          console.error("[Order] upload lỗi:", err);
+          toast(
+            "Tải tệp lên thất bại: " +
+              (/Payload too large|exceeded|size/i.test(err.message || "")
+                ? "tệp vượt quá dung lượng cho phép."
+                : err.message || "lỗi kết nối") +
+              " Đơn hàng chưa được tạo.",
+            "error"
+          );
+          restore();
+          return;
+        }
+      }
+
+      // 2) Chèn đơn hàng vào bảng orders
+      if (btnLabel) btnLabel.textContent = "Đang gửi...";
+      try {
+        const created = await insertOrder(row);
+        toast("Đơn hàng đã được ghi nhận. Chúng tôi sẽ liên hệ sớm!", "success", "Đặt dịch vụ thành công");
+        showSuccess(orderCode(created.id));
+      } catch (err) {
+        console.error("[Order] insert lỗi:", err);
+        toast(
+          /Failed to fetch|network/i.test(err.message || "")
+            ? "Lỗi kết nối mạng, vui lòng thử lại."
+            : "Không gửi được đơn hàng: " + (err.message || "lỗi không xác định"),
+          "error"
+        );
+        restore();
+      }
+    };
+
     if (btnNext) {
       btnNext.addEventListener("click", () => {
         if (!validateStep(current)) return;
         if (current < totalSteps) {
           goToStep(current + 1);
         } else {
-          // Hoàn tất: hiện màn hình thành công
-          const code = "ORD-" + String(Math.floor(1000 + Math.random() * 9000));
-          const codeEl = document.getElementById("success-code");
-          if (codeEl) codeEl.textContent = code;
-          form.classList.add("hidden");
-          const bar = document.getElementById("order-bottom-bar");
-          if (bar) bar.classList.add("hidden");
-          const stepsHead = document.getElementById("order-steps");
-          if (stepsHead) stepsHead.classList.add("hidden");
-          const success = document.getElementById("order-success");
-          if (success) {
-            success.classList.remove("hidden");
-            success.scrollIntoView({ behavior: "smooth", block: "center" });
-          }
+          submitOrder();
         }
       });
     }
@@ -257,86 +412,5 @@
         el.classList.remove("field-error");
       });
     });
-  }
-
-  /* ============================================================
-     2) FORM ĐẶT NHANH + CHỌN GÓI (service-detail.html)
-     ============================================================ */
-  const quickForm = document.getElementById("quick-form");
-  if (quickForm) {
-    const totalEl = document.getElementById("quick-total");
-    const promoEl = document.getElementById("quick-promo");
-    const promoMsgEl = document.getElementById("quick-promo-msg");
-    const deadlineEl = document.getElementById("quick-deadline");
-    const packageLabel = document.getElementById("quick-package-label");
-    const fileEl = document.getElementById("quick-file");
-    const fileNameEl = document.getElementById("quick-file-name");
-    let basePrice = Number(quickForm.dataset.basePrice || 1500000);
-
-    if (deadlineEl) {
-      const tomorrow = new Date(Date.now() + 86400000);
-      deadlineEl.min = tomorrow.toISOString().split("T")[0];
-    }
-
-    const renderQuick = () => {
-      let total = basePrice;
-      if (daysUntil(deadlineEl && deadlineEl.value) < 3) total += basePrice * RUSH_RATE;
-      const code = (promoEl && promoEl.value.trim().toUpperCase()) || "";
-      const promo = PROMOS[code];
-      if (promo) total -= total * promo.rate;
-      if (totalEl) totalEl.textContent = VND(total);
-      if (promoMsgEl) {
-        if (!code) promoMsgEl.textContent = "";
-        else if (promo) {
-          promoMsgEl.textContent = promo.label + " đã được áp dụng.";
-          promoMsgEl.className = "text-xs text-primary font-medium";
-        } else {
-          promoMsgEl.textContent = "Mã không hợp lệ.";
-          promoMsgEl.className = "text-xs text-error font-medium";
-        }
-      }
-    };
-
-    quickForm.addEventListener("input", renderQuick);
-    quickForm.addEventListener("change", renderQuick);
-    renderQuick();
-
-    if (fileEl && fileNameEl) {
-      fileEl.addEventListener("change", () => {
-        fileNameEl.textContent = fileEl.files.length ? "Đã chọn: " + fileEl.files[0].name : "Chọn file";
-      });
-    }
-
-    // Chọn gói dịch vụ → cập nhật giá form đặt nhanh
-    document.querySelectorAll("[data-package]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        basePrice = Number(btn.dataset.price || basePrice);
-        if (packageLabel) packageLabel.textContent = btn.dataset.package;
-        document.querySelectorAll("[data-package]").forEach((b) =>
-          b.classList.toggle("ring-2", b === btn)
-        );
-        renderQuick();
-        const aside = document.getElementById("booking-aside");
-        if (aside) aside.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-
-    quickForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      let ok = true;
-      quickForm.querySelectorAll("[required]").forEach((field) => {
-        field.classList.toggle("field-error", !field.value);
-        if (!field.value) ok = false;
-      });
-      if (!ok) return;
-      const success = document.getElementById("quick-success");
-      if (success) {
-        quickForm.classList.add("hidden");
-        success.classList.remove("hidden");
-      }
-    });
-    quickForm.querySelectorAll("input, textarea").forEach((el) =>
-      el.addEventListener("input", () => el.classList.remove("field-error"))
-    );
   }
 })();

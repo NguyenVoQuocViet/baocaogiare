@@ -195,3 +195,125 @@ details > summary::-webkit-details-marker { display: none; }
 .file-chip { animation: step-in 0.35s var(--ease-premium); }
 
 body.menu-locked { overflow: hidden; }
+
+/* ---------- Toast thông báo (Supabase) ---------- */
+.toast-stack {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: min(92vw, 380px);
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  background: #ffffff;
+  color: #0b1c30;
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.25);
+  border-left: 4px solid #2563eb;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.45s var(--ease-premium), opacity 0.45s var(--ease-premium);
+}
+.toast.is-visible { transform: translateX(0); opacity: 1; }
+.toast.is-leaving { transform: translateX(120%); opacity: 0; }
+.toast--success { border-left-color: #0d8a4f; }
+.toast--error { border-left-color: #d21c3c; }
+.toast--info { border-left-color: #2563eb; }
+.toast__icon { font-size: 22px; line-height: 1; flex-shrink: 0; }
+.toast--success .toast__icon { color: #0d8a4f; }
+.toast--error .toast__icon { color: #d21c3c; }
+.toast--info .toast__icon { color: #2563eb; }
+.toast__body { min-width: 0; flex: 1; }
+.toast__title { font-weight: 700; font-size: 0.9rem; }
+.toast__msg { font-size: 0.82rem; color: #475569; margin-top: 1px; word-break: break-word; }
+@media (prefers-color-scheme: dark) {
+  .toast { background: #16232e; color: #e8eef4; }
+  .toast__msg { color: #9fb0bd; }
+}
+
+/* ---------- Trạng thái nút đang xử lý ---------- */
+.is-busy { opacity: 0.7; pointer-events: none; cursor: progress; }
+
+/* Dòng đơn hàng vừa được thêm/cập nhật qua realtime */
+@keyframes row-flash {
+  0% { background-color: rgba(37, 99, 235, 0.18); }
+  100% { background-color: transparent; }
+}
+.row-flash { animation: row-flash 1.6s var(--ease-premium); }
+
+/* ---------- Drawer chi tiết đơn hàng (slide-over) ---------- */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(11, 28, 48, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s var(--ease-premium), visibility 0.3s;
+}
+.drawer-backdrop.is-open { opacity: 1; visibility: visible; }
+.admin-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(94vw, 460px);
+  z-index: 61;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.42s var(--ease-premium);
+  box-shadow: -14px 0 44px rgba(0, 0, 0, 0.18);
+}
+.admin-drawer.is-open { transform: translateX(0); }
+
+/* ---------- Dropdown thông báo ---------- */
+.notif-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: min(90vw, 360px);
+  z-index: 55;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s var(--ease-premium), transform 0.2s var(--ease-premium), visibility 0.2s;
+}
+.notif-menu.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+/* Trên điện thoại: neo dropdown ngay dưới header, tràn đều 2 mép, không lệch */
+@media (max-width: 640px) {
+  .notif-menu {
+    position: fixed;
+    top: 4rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+    transform: translateY(-6px);
+  }
+  .notif-menu.is-open { transform: translateY(0); }
+}
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Select trạng thái trong bảng đơn admin */
+.status-select {
+  appearance: none;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.6rem;
+  padding: 0.3rem 1.8rem 0.3rem 0.7rem;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23667' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
