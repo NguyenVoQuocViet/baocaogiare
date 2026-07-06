@@ -63,6 +63,9 @@
       <a class="menu-link text-on-surface hover:text-primary transition-colors" href="#lien-he">Liên hệ</a>
       <a class="menu-link bg-secondary-container text-on-secondary-fixed px-8 py-3 rounded-2xl text-lg shadow-lg tap-scale"
         href="services.html#dat-hang">Đặt dịch vụ ngay</a>
+      <div class="w-full border-t border-outline-variant/40 my-2"></div>
+      <a class="menu-link text-primary font-bold" href="login.html" data-auth-action>Đăng nhập</a>
+      <a class="menu-link text-on-surface hover:text-primary transition-colors text-lg" href="register.html">Đăng ký tài khoản</a>
     </nav>
   </div>
 
@@ -476,16 +479,25 @@
         </div>
         <p class="text-on-surface-variant text-sm max-w-sm mb-4">Nền tảng hỗ trợ học thuật hàng đầu Việt Nam, giúp sinh
           viên và chuyên gia tối ưu hóa hiệu suất làm việc và đạt kết quả như mong đợi.</p>
-        <div class="flex gap-4">
-          <a aria-label="Website"
-            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
-            href="#"><span class="material-symbols-outlined">public</span></a>
-          <a aria-label="Email"
-            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
-            href="#"><span class="material-symbols-outlined">alternate_email</span></a>
-          <a aria-label="Điện thoại"
-            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
-            href="#"><span class="material-symbols-outlined">call</span></a>
+        <div class="flex gap-4" id="footer-contacts">
+          <div class="relative">
+            <button type="button" aria-label="Email" data-contact-toggle
+              class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all">
+              <span class="material-symbols-outlined">alternate_email</span></button>
+            <div class="contact-pop hidden absolute bottom-full left-0 mb-2 whitespace-nowrap bg-surface shadow-lg rounded-xl px-4 py-2.5 text-sm border border-outline-variant/40 z-10">
+              <p class="text-xs font-bold uppercase tracking-wide text-on-surface-variant mb-0.5">Email</p>
+              <a class="text-primary font-semibold hover:underline" href="mailto:baocaogiare@gmail.com">baocaogiare@gmail.com</a>
+            </div>
+          </div>
+          <div class="relative">
+            <button type="button" aria-label="Điện thoại" data-contact-toggle
+              class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all">
+              <span class="material-symbols-outlined">call</span></button>
+            <div class="contact-pop hidden absolute bottom-full left-0 mb-2 whitespace-nowrap bg-surface shadow-lg rounded-xl px-4 py-2.5 text-sm border border-outline-variant/40 z-10">
+              <p class="text-xs font-bold uppercase tracking-wide text-on-surface-variant mb-0.5">Điện thoại / Zalo</p>
+              <a class="text-primary font-semibold hover:underline" href="tel:+84935802161">0935802161</a>
+            </div>
+          </div>
         </div>
       </div>
       <div>
@@ -514,11 +526,6 @@
       class="w-14 h-14 bg-[#0068ff] text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform active:scale-95"
       href="#">
       <span class="font-bold text-sm">Zalo</span>
-    </a>
-    <a aria-label="Chat trực tiếp"
-      class="w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform active:scale-95"
-      href="#">
-      <span class="material-symbols-outlined is-filled">chat</span>
     </a>
   </div>
 
@@ -551,6 +558,23 @@
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    // Popover thông tin liên hệ (email / điện thoại) ở footer
+    (function () {
+      const toggles = document.querySelectorAll("#footer-contacts [data-contact-toggle]");
+      const closeAll = (except) => document.querySelectorAll("#footer-contacts .contact-pop").forEach((p) => { if (p !== except) p.classList.add("hidden"); });
+      toggles.forEach((btn) => {
+        const pop = btn.parentElement.querySelector(".contact-pop");
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const willShow = pop.classList.contains("hidden");
+          closeAll(willShow ? pop : null);
+          pop.classList.toggle("hidden", !willShow);
+        });
+      });
+      document.addEventListener("click", () => closeAll(null));
+    })();
+  </script>
 </body>
 
 </html>
