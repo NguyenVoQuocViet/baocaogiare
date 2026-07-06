@@ -1,20 +1,44 @@
 /* ============================================================
    supabase-config.js — Khởi tạo kết nối Supabase (dùng chung)
-   Nạp SAU thẻ <script> CDN của @supabase/supabase-js.
+   Nạp SAU thẻ <script> CDN của @supabase/supabase-js VÀ sau js/env.js.
    Cung cấp:
      • window.sb        → Supabase client
      • window.showToast → thông báo nổi (success / error / info)
+
+   Cấu hình kết nối KHÔNG hardcode trong file này. Hai giá trị dưới đây
+   được nạp từ `window.ENV` do file js/env.js sinh ra lúc build (từ biến
+   môi trường SUPABASE_URL / SUPABASE_ANON_KEY trên Vercel hoặc .env local).
+   Xem hướng dẫn cấu hình trong README.
    ============================================================ */
 (function () {
   "use strict";
 
-  /* ---------- Thông tin cấu hình kết nối ---------- */
-  const SUPABASE_URL = "https://fsweklelshzetgolpfrr.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_Yj98QUozMguKGTKXbO59Mw_qFiIZwaE";
+  /* ---------- Đọc cấu hình từ biến môi trường (đã nhúng qua js/env.js) ---------- */
+  const ENV = window.ENV || {};
+  const SUPABASE_URL = ENV.SUPABASE_URL;
+  const SUPABASE_ANON_KEY = ENV.SUPABASE_ANON_KEY;
 
   /* ---------- Khởi tạo client ---------- */
-  // Thư viện CDN expose global `supabase` (có hàm createClient).
-  if (!window.supabase || typeof window.supabase.createClient !== "function") {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    // Thiếu biến môi trường: dừng khởi tạo và báo lỗi rõ ràng thay vì fail âm thầm.
+    console.error(
+      "[Supabase] Thiếu SUPABASE_URL hoặc SUPABASE_ANON_KEY.\n" +
+        "  • Local: tạo file .env (xem .env.example) rồi chạy `npm run build`.\n" +
+        "  • Vercel: Settings → Environment Variables → thêm 2 biến này rồi Redeploy.\n" +
+        "  → File js/env.js chưa được sinh hoặc chưa có giá trị."
+    );
+    // Hiện thông báo trực quan cho người dùng cuối khi trang đã sẵn sàng.
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof window.showToast === "function") {
+        window.showToast(
+          "Trang chưa được cấu hình kết nối máy chủ. Vui lòng liên hệ quản trị viên.",
+          "error",
+          "Chưa cấu hình Supabase"
+        );
+      }
+    });
+  } else if (!window.supabase || typeof window.supabase.createClient !== "function") {
+    // Thư viện CDN expose global `supabase` (có hàm createClient).
     console.error(
       "[Supabase] Chưa nạp được thư viện @supabase/supabase-js. " +
         "Hãy kiểm tra thẻ <script> CDN đặt TRƯỚC supabase-config.js."

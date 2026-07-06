@@ -14,6 +14,12 @@ build/
 .env.local
 .env.*.local
 
+# File cấu hình tự sinh khi build (chứa key Supabase) — KHÔNG commit
+js/env.js
+
+# Vercel
+.vercel/
+
 # Editor / IDE
 .vscode/
 .idea/

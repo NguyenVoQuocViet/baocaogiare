@@ -98,6 +98,45 @@
     let current = 1;
     const totalSteps = steps.length;
 
+    /* ----- Bắt buộc đăng nhập mới được đặt dịch vụ ----- */
+    let sessionUser = null;
+    const nextParam = () =>
+      encodeURIComponent((location.pathname.split("/").pop() || "services.html") + "#dat-hang");
+
+    const loginBanner = document.createElement("div");
+    loginBanner.className =
+      "hidden mb-6 rounded-2xl border border-primary/30 bg-primary/5 px-5 py-4 flex items-start gap-3";
+    loginBanner.innerHTML =
+      '<span class="material-symbols-outlined text-primary flex-shrink-0">lock</span>' +
+      '<div class="text-sm min-w-0"><p class="font-semibold text-on-surface">Bạn cần đăng nhập để đặt dịch vụ.</p>' +
+      '<p class="text-on-surface-variant mt-0.5">Đăng nhập giúp lưu đơn và theo dõi tiến độ. ' +
+      '<a class="text-primary font-semibold hover:underline" data-login-link href="login.html">Đăng nhập</a> · ' +
+      '<a class="text-primary font-semibold hover:underline" href="register.html">Đăng ký</a></p></div>';
+    form.prepend(loginBanner);
+
+    const refreshAuthState = async () => {
+      sessionUser = await getSessionUser();
+      loginBanner.classList.toggle("hidden", !!sessionUser);
+      const link = loginBanner.querySelector("[data-login-link]");
+      if (link) link.setAttribute("href", "login.html?next=" + nextParam());
+    };
+    refreshAuthState();
+
+    // Trả về true nếu đã đăng nhập; nếu chưa thì hiện thông báo + chuyển tới trang đăng nhập
+    const ensureLoggedIn = async () => {
+      if (sessionUser) return true;
+      sessionUser = await getSessionUser(); // kiểm tra lại phòng khi vừa đăng nhập ở tab khác
+      if (sessionUser) {
+        loginBanner.classList.add("hidden");
+        return true;
+      }
+      toast("Vui lòng đăng nhập để đặt dịch vụ.", "info");
+      loginBanner.classList.remove("hidden");
+      loginBanner.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => (window.location.href = "login.html?next=" + nextParam()), 1200);
+      return false;
+    };
+
     // Deadline tối thiểu là ngày mai
     if (deadlineInput) {
       const tomorrow = new Date(Date.now() + 86400000);
@@ -332,8 +371,10 @@
     };
 
     if (btnNext) {
-      btnNext.addEventListener("click", () => {
+      btnNext.addEventListener("click", async () => {
         if (!validateStep(current)) return;
+        // Chặn ngay từ bước 1: chưa đăng nhập thì không cho tiếp tục đặt dịch vụ
+        if (current === 1 && !(await ensureLoggedIn())) return;
         if (current < totalSteps) {
           goToStep(current + 1);
         } else {

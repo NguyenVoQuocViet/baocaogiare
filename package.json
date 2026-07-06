@@ -1,0 +1,10 @@
+{
+  "name": "academic-services-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website dịch vụ học thuật & văn phòng — Báo cáo giá rẻ",
+  "scripts": {
+    "build": "node scripts/generate-env.js",
+    "dev": "node scripts/generate-env.js && npx serve ."
+  }
+}
