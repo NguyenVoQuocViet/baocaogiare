@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet"/>
 </head>
-<body class="bg-background text-on-surface selection:bg-primary-fixed pb-20 md:pb-0">
+<body class="bg-background text-on-surface selection:bg-primary-fixed pb-40 md:pb-0">
 
 <!-- ===== Header ===== -->
 <header class="site-header sticky top-0 z-50 w-full bg-surface/80 backdrop-blur-md">
@@ -341,8 +341,8 @@
               <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-4" id="customer-name" placeholder="Nguyễn Văn A" required type="text"/>
             </div>
             <div class="space-y-stack-sm">
-              <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="customer-phone">Số điện thoại / Zalo</label>
-              <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-4" id="customer-phone" placeholder="090 123 4567" required type="tel"/>
+              <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="customer-phone">Facebook <span class="font-normal text-on-surface-variant/70">(không bắt buộc)</span></label>
+              <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-4" id="customer-phone" placeholder="Link trang cá nhân Facebook" type="text"/>
             </div>
           </div>
         </div>
@@ -374,7 +374,7 @@
             </div>
             <div class="rounded-xl bg-primary/5 border border-primary/20 px-4 py-3 flex items-start gap-2.5">
               <span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">info</span>
-              <p class="text-sm text-on-surface leading-relaxed"><span class="font-semibold">Lưu ý:</span> Sau khi bạn bấm "Tiếp theo" và gửi đơn hàng, Admin sẽ kiểm tra file đính kèm/yêu cầu chi tiết của bạn và chủ động liên hệ qua Zalo/Email để báo mức giá chính xác nhất trước khi tiến hành làm bài.</p>
+              <p class="text-sm text-on-surface leading-relaxed"><span class="font-semibold">Lưu ý:</span> Sau khi bạn bấm "Tiếp theo" và gửi đơn hàng, Admin sẽ kiểm tra file đính kèm/yêu cầu chi tiết của bạn và chủ động liên hệ qua Email để báo mức giá chính xác nhất trước khi tiến hành làm bài.</p>
             </div>
           </div>
         </div>
@@ -396,9 +396,9 @@
         </div>
         <h3 class="text-2xl font-bold mb-2">Đặt dịch vụ thành công!</h3>
         <p class="text-on-surface-variant mb-1">Mã đơn hàng của bạn: <span class="font-bold text-primary" id="success-code">ORD-0000</span></p>
-        <p class="text-sm text-on-surface-variant max-w-sm mx-auto mb-8">Chúng tôi sẽ gửi báo giá xác nhận qua Zalo/Email trong 5-10 phút. Bạn có thể theo dõi tiến độ trong trang cá nhân.</p>
+        <p class="text-sm text-on-surface-variant max-w-sm mx-auto mb-8">Chúng tôi sẽ gửi báo giá xác nhận qua Email trong 5-10 phút. Bạn có thể theo dõi tiến độ trong trang cá nhân.</p>
         <div class="flex items-center justify-center gap-4">
-          <a class="bg-primary text-on-primary px-6 py-3 rounded-xl font-semibold tap-scale shadow-lg shadow-primary/20" href="admin-dashboard.html">Theo dõi đơn hàng</a>
+          <a class="bg-primary text-on-primary px-6 py-3 rounded-xl font-semibold tap-scale shadow-lg shadow-primary/20" href="my-orders.html">Theo dõi đơn hàng</a>
           <a class="border-2 border-primary text-primary px-6 py-3 rounded-xl font-semibold hover:bg-primary/5 transition-colors" href="index.html">Về trang chủ</a>
         </div>
       </div>
@@ -407,12 +407,12 @@
 </main>
 
 <!-- Thanh ước tính cố định (mobile) -->
-<div class="md:hidden fixed bottom-20 left-0 w-full z-40 bg-surface-container-lowest px-4 py-3 flex items-center justify-between shadow-[0_-8px_24px_rgba(0,0,0,0.05)] border-t border-outline-variant/10" id="order-bottom-bar">
-  <div>
+<div class="md:hidden fixed bottom-20 left-0 w-full z-40 bg-surface-container-lowest px-4 py-3 flex items-center justify-between gap-3 shadow-[0_-8px_24px_rgba(0,0,0,0.05)] border-t border-outline-variant/10" id="order-bottom-bar">
+  <div class="min-w-0">
     <p class="text-xs text-outline">Giá dịch vụ</p>
-    <p class="text-base font-bold text-primary">Ước tính theo yêu cầu</p>
+    <p class="text-sm font-bold text-primary truncate">Ước tính theo yêu cầu</p>
   </div>
-  <a class="bg-secondary-container text-on-secondary-fixed text-sm font-semibold px-5 py-2.5 rounded-xl tap-scale shadow-md" href="#dat-hang">Đến form đặt hàng</a>
+  <a class="bg-secondary-container text-on-secondary-fixed text-sm font-semibold px-4 py-2.5 rounded-xl tap-scale shadow-md whitespace-nowrap flex-shrink-0" href="#dat-hang">Đến form đặt hàng</a>
 </div>
 
 <!-- ===== Footer ===== -->

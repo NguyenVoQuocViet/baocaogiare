@@ -14,7 +14,7 @@ Website dịch vụ Word, PowerPoint, Canva, tiểu luận, CV và luận văn d
 ## ✨ Tính năng
 
 ### Người dùng
-- **Trang chủ** — hero, dịch vụ nổi bật, quy trình 4 bước, lý do chọn dịch vụ, nút liên hệ nhanh (Zalo) + popover email/điện thoại.
+- **Trang chủ** — hero, dịch vụ nổi bật, quy trình 4 bước, lý do chọn dịch vụ, nút liên hệ nhanh (Facebook) + popover email/Facebook.
 - **Danh sách dịch vụ** — bộ lọc theo phân loại + khoảng giá + tag nhanh + tìm kiếm realtime, có empty state.
 - **Đặt hàng 3 bước** — Thông tin → Thanh toán → Xác nhận, **tính giá tự động** (phụ phí hỏa tốc, mã giảm giá), kéo-thả tệp đính kèm được tải thẳng lên Supabase Storage.
 - **Bắt buộc đăng nhập mới đặt được dịch vụ** — chặn ngay từ bước 1, tự chuyển tới trang đăng nhập kèm `?next=` để quay lại đúng form.

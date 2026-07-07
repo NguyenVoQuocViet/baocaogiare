@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet"/>
 </head>
-<body class="bg-background text-on-surface selection:bg-primary-fixed pb-20 md:pb-0">
+<body class="bg-background text-on-surface selection:bg-primary-fixed pb-20 md:pb-0 min-h-screen flex flex-col">
 
 <!-- ===== Header ===== -->
 <header class="site-header sticky top-0 z-50 w-full bg-surface/80 backdrop-blur-md">
@@ -58,7 +58,7 @@
   </nav>
 </div>
 
-<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<main class="w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg flex-1">
 
   <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-stack-lg">
     <div>
@@ -109,13 +109,13 @@
   <div class="mt-stack-md flex items-start gap-3 rounded-2xl border border-secondary/30 bg-secondary-container/20 px-5 py-4 max-w-2xl">
     <span class="material-symbols-outlined text-secondary flex-shrink-0">info</span>
     <p class="text-sm text-on-surface leading-relaxed">
-      <span class="font-semibold">(*) Lưu ý:</span> Vui lòng kiểm tra <b>Zalo</b> hoặc <b>Email</b> để nhận thông tin chuyển khoản sau khi đơn hàng được chốt giá.
+      <span class="font-semibold">(*) Lưu ý:</span> Vui lòng kiểm tra <b>Facebook</b> hoặc <b>Email</b> để nhận thông tin chuyển khoản sau khi đơn hàng được chốt giá.
     </p>
   </div>
 </main>
 
 <!-- ===== Footer ===== -->
-<footer class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-surface-container-highest border-t border-outline-variant mt-16">
+<footer class="w-full py-stack-lg px-margin-mobile md:px-margin-desktop bg-surface-container-highest border-t border-outline-variant mt-16 ">
   <div class="max-w-container-max mx-auto flex flex-col md:flex-row items-center justify-between gap-4 py-4 text-sm text-on-surface-variant">
     <div class="flex items-center gap-2">
       <img alt="Logo Báo cáo giá rẻ" class="h-8 w-8 object-contain" src="assets/logo.svg"/>
