@@ -56,19 +56,6 @@
   // Sinh mã đơn hiển thị từ id thật của DB
   const orderCode = (id) => "ORD-" + String(id).padStart(4, "0");
 
-  const VND = (n) => new Intl.NumberFormat("vi-VN").format(Math.max(0, Math.round(n))) + "đ";
-  const RUSH_RATE = 0.3; // Phụ phí hỏa tốc +30% khi deadline < 3 ngày
-  const PROMOS = {
-    STUDENT20: { rate: 0.2, label: "Giảm 20% cho sinh viên" },
-    BAOCAO10: { rate: 0.1, label: "Giảm 10% đơn đầu tiên" }
-  };
-
-  const daysUntil = (dateStr) => {
-    if (!dateStr) return Infinity;
-    const target = new Date(dateStr + "T23:59:59");
-    return (target - new Date()) / 86400000;
-  };
-
   /* ============================================================
      1) FORM ĐẶT HÀNG 3 BƯỚC (services.html)
      ============================================================ */
@@ -82,18 +69,8 @@
     const btnLabel = document.getElementById("btn-next-label");
 
     const serviceSelect = document.getElementById("service-select");
-    const qtyInput = document.getElementById("qty-input");
-    const qtyUnit = document.getElementById("qty-unit");
     const deadlineInput = document.getElementById("deadline-input");
-    const promoInput = document.getElementById("promo-input");
-    const promoMsg = document.getElementById("promo-msg");
-
-    const elBase = document.getElementById("price-base");
-    const elRush = document.getElementById("price-rush");
-    const elDiscount = document.getElementById("price-discount");
-    const elTotal = document.getElementById("price-total");
-    const elTotalBar = document.getElementById("price-total-bar");
-    const discountRow = document.getElementById("discount-row");
+    const ppNote = document.getElementById("pp-price-note"); // chú thích giá PowerPoint theo slide
 
     let current = 1;
     const totalSteps = steps.length;
@@ -143,52 +120,16 @@
       deadlineInput.min = tomorrow.toISOString().split("T")[0];
     }
 
-    /* ----- Tính giá ----- */
-    const getPricing = () => {
-      const opt = serviceSelect.options[serviceSelect.selectedIndex];
-      const unitPrice = Number(opt.dataset.price || 0);
-      const qty = Math.max(1, Number(qtyInput && qtyInput.value) || 1);
-      const base = unitPrice * qty;
-
-      const rush = daysUntil(deadlineInput && deadlineInput.value) < 3 ? base * RUSH_RATE : 0;
-
-      const code = (promoInput && promoInput.value.trim().toUpperCase()) || "";
-      const promo = PROMOS[code];
-      const discount = promo ? (base + rush) * promo.rate : 0;
-
-      return { base, rush, discount, total: base + rush - discount, promo, code };
+    /* ----- Đổi dịch vụ (onchange) -----
+       Không còn tính tổng tiền: giá do Admin báo sau khi xem yêu cầu.
+       Chỉ hiện chú thích đơn giá theo slide khi chọn PowerPoint. */
+    const applyServiceMode = () => {
+      const isPowerPoint = serviceSelect.value === "powerpoint";
+      if (ppNote) ppNote.classList.toggle("hidden", !isPowerPoint);
     };
 
-    const renderPricing = () => {
-      const p = getPricing();
-      if (elBase) elBase.textContent = VND(p.base);
-      if (elRush) elRush.textContent = p.rush > 0 ? "+" + VND(p.rush) : "0đ";
-      if (elDiscount) elDiscount.textContent = p.discount > 0 ? "-" + VND(p.discount) : "0đ";
-      if (discountRow) discountRow.style.display = p.discount > 0 ? "flex" : "none";
-      if (elTotal) elTotal.textContent = VND(p.total);
-      if (elTotalBar) elTotalBar.textContent = VND(p.total);
-
-      if (promoMsg) {
-        if (!promoInput.value.trim()) {
-          promoMsg.textContent = "";
-        } else if (p.promo) {
-          promoMsg.textContent = "Áp dụng thành công: " + p.promo.label + ".";
-          promoMsg.className = "text-xs mt-1 text-primary font-medium";
-        } else {
-          promoMsg.textContent = "Mã không hợp lệ hoặc đã hết hạn.";
-          promoMsg.className = "text-xs mt-1 text-error font-medium";
-        }
-      }
-
-      if (qtyUnit && serviceSelect) {
-        qtyUnit.textContent = serviceSelect.options[serviceSelect.selectedIndex].dataset.unit || "trang";
-      }
-    };
-
-    ["change", "input"].forEach((evt) => {
-      form.addEventListener(evt, renderPricing);
-    });
-    renderPricing();
+    if (serviceSelect) serviceSelect.addEventListener("change", applyServiceMode);
+    applyServiceMode(); // đồng bộ chú thích theo dịch vụ đang chọn
 
     /* ----- Bấm "Đặt ngay" ở thẻ dịch vụ → tự chọn đúng dịch vụ ----- */
     document.querySelectorAll("[data-service]").forEach((link) => {
@@ -197,7 +138,7 @@
         const opt = Array.from(serviceSelect.options).find((o) => o.value === val);
         if (opt) {
           serviceSelect.value = val;
-          renderPricing();
+          applyServiceMode();
         }
       });
     });
@@ -249,17 +190,14 @@
     };
 
     const fillReview = () => {
-      const p = getPricing();
       const set = (id, val) => {
         const el = document.getElementById(id);
         if (el) el.textContent = val;
       };
       set("review-service", serviceSelect.options[serviceSelect.selectedIndex].text);
-      set("review-qty", (qtyInput ? qtyInput.value : "1") + " " + (qtyUnit ? qtyUnit.textContent : ""));
       set("review-deadline", deadlineInput.value ? new Date(deadlineInput.value).toLocaleDateString("vi-VN") : "—");
       const method = form.querySelector('input[name="payment"]:checked');
       set("review-payment", method ? method.dataset.label : "—");
-      set("review-total", VND(p.total));
       const fileCount = fileStore.length;
       set("review-files", fileCount ? fileCount + " tệp đính kèm" : "Không có tệp");
     };
@@ -290,10 +228,7 @@
         return;
       }
 
-      const p = getPricing();
       const serviceText = serviceSelect.options[serviceSelect.selectedIndex].text;
-      const qty = qtyInput ? qtyInput.value : "1";
-      const unit = qtyUnit ? qtyUnit.textContent : "";
       const note = (document.getElementById("order-note") || {}).value || "";
       const name = (document.getElementById("customer-name") || {}).value || "";
       const phone = (document.getElementById("customer-phone") || {}).value || "";
@@ -302,11 +237,8 @@
       const fileNames = fileStore.map((f) => f.name).join(", ");
 
       const details = [
-        "Số lượng: " + qty + " " + unit,
         payLabel ? "Thanh toán: " + payLabel : "",
         name || phone ? "Liên hệ: " + [name, phone].filter(Boolean).join(" - ") : "",
-        p.promo && p.code ? "Mã giảm giá: " + p.code + " (-" + VND(p.discount) + ")" : "",
-        p.rush > 0 ? "Phụ phí hỏa tốc: +" + VND(p.rush) : "",
         fileNames ? "Tệp đính kèm: " + fileNames : "",
         "Ghi chú: " + note
       ]
@@ -319,7 +251,7 @@
         deadline: deadlineInput && deadlineInput.value ? deadlineInput.value : null,
         details: details,
         file_url: null,
-        total_price: Math.round(p.total),
+        total_price: 0, // Chưa báo giá — Admin sẽ cập nhật giá sau khi xem yêu cầu
         status: "pending"
       };
 

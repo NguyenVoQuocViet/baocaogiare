@@ -8,7 +8,7 @@
   const sb = window.sb;
   const AC = window.AdminCommon || {};
   const toast = window.showToast || function (m) { alert(m); };
-  const { esc, VND, fmtDate, initials, statusBadge } = AC;
+  const { esc, VND, priceLabel, fmtDate, initials, statusBadge } = AC;
 
   const tbody = document.getElementById("customers-tbody");
   const searchInput = document.getElementById("customer-search");
@@ -54,7 +54,7 @@
               '<span class="min-w-0"><span class="block text-sm font-bold text-primary">' + AC.orderCode(o.id) + "</span>" +
               '<span class="block text-xs text-on-surface-variant truncate">' + esc(o.service_type || "—") + "</span></span>" +
               '<span class="text-right flex-shrink-0"><span class="block">' + statusBadge(o.status) + "</span>" +
-              '<span class="block text-xs mt-1 font-semibold">' + VND(o.total_price) + "</span></span></button>"
+              '<span class="block text-xs mt-1 font-semibold">' + priceLabel(o.total_price) + "</span></span></button>"
           )
           .join("")
       : '<p class="text-sm text-on-surface-variant">Khách hàng chưa có đơn nào.</p>';
@@ -79,7 +79,7 @@
     body.querySelectorAll("[data-order-id]").forEach((btn) =>
       btn.addEventListener("click", () => {
         const o = allOrders.find((x) => x.id === Number(btn.dataset.orderId));
-        if (o) { closeDrawer(); AC.openOrderDrawer(o, { onStatusChange: changeStatus, onDelete: handleDelete }); }
+        if (o) { closeDrawer(); AC.openOrderDrawer(o, { onStatusChange: changeStatus, onDelete: handleDelete, onPriceChange: changePrice }); }
       })
     );
 
@@ -101,6 +101,16 @@
       toast("Không cập nhật được: " + (err.message || "lỗi"), "error");
       return false;
     }
+  }
+
+  // Giá vừa chốt → cập nhật đơn + tính lại tổng chi tiêu của khách rồi render lại
+  function changePrice(orderId, price) {
+    const o = allOrders.find((x) => x.id === orderId);
+    if (o) o.total_price = price;
+    customers.forEach((c) => {
+      c.total = c.orders.reduce((s, x) => s + Number(x.total_price || 0), 0);
+    });
+    render();
   }
 
   async function handleDelete(orderId, fileUrl) {
@@ -180,10 +190,12 @@
       allOrders.forEach((o) => {
         (byUser[o.user_id] = byUser[o.user_id] || []).push(o);
       });
-      customers = (pRes.data || []).map((p) => {
-        const list = byUser[p.id] || [];
-        return { p, orders: list, count: list.length, total: list.reduce((s, o) => s + Number(o.total_price || 0), 0) };
-      });
+      customers = (pRes.data || [])
+        .filter((p) => p.role !== "admin") // Admin không phải khách hàng → không liệt kê
+        .map((p) => {
+          const list = byUser[p.id] || [];
+          return { p, orders: list, count: list.length, total: list.reduce((s, o) => s + Number(o.total_price || 0), 0) };
+        });
       render();
     } catch (err) {
       console.error("[Customers] load lỗi:", err);
@@ -203,7 +215,7 @@
     if (!ok) return;
     AC.initNotifications(
       () => allOrders,
-      (o) => AC.openOrderDrawer(o, { onStatusChange: changeStatus, onDelete: handleDelete })
+      (o) => AC.openOrderDrawer(o, { onStatusChange: changeStatus, onDelete: handleDelete, onPriceChange: changePrice })
     );
     await load();
   })();

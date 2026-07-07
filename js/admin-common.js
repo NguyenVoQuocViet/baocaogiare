@@ -9,9 +9,12 @@
   "use strict";
 
   const sb = window.sb;
+  const toast = window.showToast || function (m) { alert(m); };
 
   /* ---------- Helper định dạng ---------- */
   const VND = (n) => new Intl.NumberFormat("vi-VN").format(Number(n || 0)) + "₫";
+  // Giá theo TỪNG đơn: 0 nghĩa là chưa báo giá (đơn mới, admin chưa nhập giá).
+  const priceLabel = (n) => (Number(n) > 0 ? VND(n) : "Chưa báo giá");
   const orderCode = (id) => "ORD-" + String(id).padStart(4, "0");
   const esc = (s) =>
     String(s == null ? "" : s).replace(/[&<>"']/g, (c) =>
@@ -139,7 +142,7 @@
   /* ============================================================
      DRAWER CHI TIẾT ĐƠN HÀNG
      ============================================================ */
-  let drawerEl, backdropEl, onStatusChangeCb, onDeleteCb;
+  let drawerEl, backdropEl, onStatusChangeCb, onDeleteCb, onPriceChangeCb;
 
   function ensureDrawer() {
     if (drawerEl) return;
@@ -176,6 +179,7 @@
     opts = opts || {};
     onStatusChangeCb = opts.onStatusChange || null;
     onDeleteCb = opts.onDelete || null;
+    onPriceChangeCb = opts.onPriceChange || null;
     const v = orderView(dbRow);
 
     const body = drawerEl.querySelector("#drawer-body");
@@ -202,7 +206,22 @@
       infoRow("Dịch vụ", esc(v.service)) +
       infoRow("Deadline", fmtDate(v.deadline)) +
       infoRow("Ngày đặt", fmtDateTime(v.created)) +
-      infoRow("Tổng tiền", '<span class="text-primary text-base">' + VND(v.price) + "</span>") +
+      infoRow("Tổng tiền", '<span data-drawer-price-display class="' + (Number(v.price) > 0 ? "text-primary" : "text-on-surface-variant") + ' text-base">' + priceLabel(v.price) + "</span>") +
+      "</div>" +
+      // Chốt giá dịch vụ (Admin nhập giá trực tiếp)
+      '<div class="space-y-2">' +
+      '<p class="text-xs font-bold uppercase tracking-wide text-on-surface-variant">Chốt giá dịch vụ</p>' +
+      '<div class="flex items-center gap-2">' +
+      '<div class="relative flex-1">' +
+      '<input type="number" id="update-price-input" min="0" step="1000" inputmode="numeric" ' +
+      'value="' + (Number(v.price) > 0 ? Number(v.price) : "") + '" placeholder="Nhập giá chốt (VNĐ)" ' +
+      'class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-xl pl-4 pr-8 py-2.5 text-sm"/>' +
+      '<span class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm pointer-events-none">₫</span>' +
+      "</div>" +
+      '<button type="button" id="btn-update-price" class="bg-primary text-on-primary font-semibold px-4 py-2.5 rounded-xl text-sm tap-scale hover:opacity-90 transition-opacity flex items-center gap-1.5 flex-shrink-0">' +
+      '<span class="material-symbols-outlined text-[18px]">payments</span>Cập nhật giá</button>' +
+      "</div>" +
+      '<p class="text-xs text-on-surface-variant">Nhập số tiền chốt rồi bấm “Cập nhật giá”. Để trống hoặc 0 nghĩa là chưa báo giá.</p>' +
       "</div>" +
       // Tệp đính kèm
       '<div class="space-y-2">' +
@@ -239,6 +258,69 @@
             if (badge) badge.innerHTML = statusBadge(sel.value);
             sel.className = "status-select " + (STATUS_META[sel.value] || STATUS_META.pending).cls;
           }
+        }
+      });
+    }
+
+    /* ----- Chốt giá đơn hàng ----- */
+    const priceBtn = body.querySelector("#btn-update-price");
+    const priceInput = body.querySelector("#update-price-input");
+    if (priceBtn && priceInput) {
+      const submitPrice = async () => {
+        const raw = priceInput.value.trim();
+        // Bắt lỗi: chưa nhập số tiền
+        if (raw === "") {
+          toast("Vui lòng nhập giá chốt cho đơn hàng.", "error", "Thiếu thông tin");
+          priceInput.focus();
+          return;
+        }
+        // Bắt lỗi: không phải số hợp lệ hoặc số âm
+        const price = Number(raw);
+        if (!Number.isFinite(price) || price < 0) {
+          toast("Giá không hợp lệ. Vui lòng nhập số tiền lớn hơn hoặc bằng 0.", "error");
+          priceInput.focus();
+          return;
+        }
+
+        priceBtn.classList.add("is-busy");
+        // Chỉ Admin mới được chốt giá (dùng đúng cơ chế kiểm tra quyền hiện có)
+        const profile = window.Auth ? await window.Auth.getProfile() : null;
+        if (!profile || profile.role !== "admin") {
+          toast("Bạn không có quyền cập nhật giá đơn hàng.", "error", "Truy cập bị từ chối");
+          priceBtn.classList.remove("is-busy");
+          return;
+        }
+
+        try {
+          const finalPrice = Math.round(price);
+          await updateOrderPrice(v.id, finalPrice);
+          dbRow.total_price = finalPrice; // đồng bộ dữ liệu gốc để lần mở sau đúng
+          // Tải lại hiển thị giá ngay trong drawer
+          const priceCell = body.querySelector("[data-drawer-price-display]");
+          if (priceCell) {
+            priceCell.className = (finalPrice > 0 ? "text-primary" : "text-on-surface-variant") + " text-base";
+            priceCell.textContent = priceLabel(finalPrice);
+          }
+          priceInput.value = finalPrice > 0 ? finalPrice : "";
+          toast("Đã cập nhật giá thành công!", "success");
+          if (onPriceChangeCb) onPriceChangeCb(v.id, finalPrice); // để trang cập nhật thống kê/bảng
+        } catch (err) {
+          console.error("[Admin] update price lỗi:", err);
+          toast(
+            /Failed to fetch|network/i.test(err.message || "")
+              ? "Lỗi kết nối mạng, vui lòng thử lại."
+              : "Không cập nhật được giá: " + (err.message || "lỗi không xác định"),
+            "error"
+          );
+        } finally {
+          priceBtn.classList.remove("is-busy");
+        }
+      };
+      priceBtn.addEventListener("click", submitPrice);
+      priceInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          submitPrice();
         }
       });
     }
@@ -334,10 +416,16 @@
     if (error) throw error;
   }
 
+  /* ---------- Cập nhật giá chốt của đơn (dùng chung) ---------- */
+  async function updateOrderPrice(orderId, price) {
+    const { error } = await sb.from("orders").update({ total_price: price }).eq("id", orderId);
+    if (error) throw error;
+  }
+
   window.AdminCommon = {
-    VND, orderCode, esc, nl2br, fmtDate, fmtDateTime, initials,
+    VND, priceLabel, orderCode, esc, nl2br, fmtDate, fmtDateTime, initials,
     STATUS_META, STATUS_ORDER, orderView, statusBadge, statusSelectHTML,
-    initSidebar, openOrderDrawer, closeOrderDrawer, initNotifications, updateOrderStatus,
+    initSidebar, openOrderDrawer, closeOrderDrawer, initNotifications, updateOrderStatus, updateOrderPrice,
     fileLinksHTML, extractStoragePaths, deleteOrderWithFile
   };
 })();

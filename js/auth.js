@@ -145,7 +145,7 @@
       }
 
       submitBtn.classList.add("is-busy");
-      const originalLabel = submitBtn.textContent;
+      const originalHTML = submitBtn.innerHTML; // giữ nguyên cả icon để khôi phục đúng
       submitBtn.textContent = "Đang đăng nhập...";
 
       try {
@@ -160,7 +160,7 @@
       } catch (err) {
         toast(viError(err), "error");
         submitBtn.classList.remove("is-busy");
-        submitBtn.textContent = originalLabel;
+        submitBtn.innerHTML = originalHTML;
       }
     });
   }
@@ -204,7 +204,7 @@
       }
 
       submitBtn.classList.add("is-busy");
-      const originalLabel = submitBtn.textContent;
+      const originalHTML = submitBtn.innerHTML; // giữ nguyên cả icon để khôi phục đúng
       submitBtn.textContent = "Đang tạo tài khoản...";
 
       try {
@@ -234,7 +234,7 @@
       } catch (err) {
         toast(viError(err), "error");
         submitBtn.classList.remove("is-busy");
-        submitBtn.textContent = originalLabel;
+        submitBtn.innerHTML = originalHTML;
       }
     });
   }
@@ -269,6 +269,8 @@
     document.querySelectorAll("[data-auth-name]").forEach((el) => {
       el.textContent = name;
     });
+    // Hiện các phần tử chỉ dành cho người đã đăng nhập (vd: "Đơn hàng của tôi")
+    document.querySelectorAll("[data-auth-user-only]").forEach((el) => el.classList.remove("hidden"));
     // Hiện lời chào / lối tắt tới dashboard nếu là admin
     document.querySelectorAll("[data-auth-greeting]").forEach((el) => {
       el.textContent = "Xin chào, " + name;

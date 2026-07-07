@@ -24,6 +24,7 @@
     <nav class="hidden md:flex items-center gap-stack-lg">
       <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html">Trang chủ</a>
       <a class="text-primary font-bold border-b-2 border-primary pb-1" href="services.html">Dịch vụ</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors hidden" data-auth-user-only href="my-orders.html">Đơn hàng của tôi</a>
       <a class="text-on-surface-variant hover:text-primary transition-colors hidden" data-auth-admin-only href="admin-dashboard.html">Quản trị</a>
       <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#lien-he">Liên hệ</a>
     </nav>
@@ -47,6 +48,7 @@
   <nav class="flex flex-col items-center gap-6 pt-10 text-2xl font-bold">
     <a class="menu-link text-on-surface hover:text-primary transition-colors" href="index.html">Trang chủ</a>
     <a class="menu-link text-primary" href="services.html">Dịch vụ</a>
+    <a class="menu-link text-on-surface hover:text-primary transition-colors hidden" data-auth-user-only href="my-orders.html">Đơn hàng của tôi</a>
     <a class="menu-link text-on-surface hover:text-primary transition-colors hidden" data-auth-admin-only href="admin-dashboard.html">Quản trị</a>
     <a class="menu-link text-on-surface hover:text-primary transition-colors" href="index.html#lien-he">Liên hệ</a>
     <a class="menu-link bg-secondary-container text-on-secondary-fixed px-8 py-3 rounded-2xl text-lg shadow-lg tap-scale" href="#dat-hang">Đặt dịch vụ ngay</a>
@@ -134,7 +136,7 @@
           <div class="p-stack-md flex flex-col flex-grow">
             <h4 class="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">Thiết kế PowerPoint</h4>
             <div class="mt-auto flex items-center justify-between pt-3 border-t border-surface-container">
-              <p class="text-primary font-bold">Từ 4.000đ<span class="text-xs text-on-surface-variant font-normal">/slide</span></p>
+              <p class="text-primary font-bold">Từ 8.000đ<span class="text-xs text-on-surface-variant font-normal">/slide</span></p>
               <a class="text-sm font-semibold text-primary hover:underline flex items-center gap-1" href="#dat-hang" data-service="powerpoint">Đặt ngay <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
             </div>
           </div>
@@ -263,32 +265,31 @@
             <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="service-select">Tên dịch vụ</label>
             <div class="relative">
               <select class="input-focus-ring w-full bg-surface-container-lowest bg-none border border-outline-variant rounded-2xl px-4 py-4 appearance-none" id="service-select" required>
-                <option data-price="100000" data-unit="bộ slide" value="powerpoint">Thiết kế PowerPoint chuyên nghiệp — 100.000đ/bộ</option>
-                <option data-price="50000" data-unit="tài liệu" value="word">Soạn thảo &amp; Trình bày Word — 50.000đ/tài liệu</option>
-                <option data-price="80000" data-unit="ấn phẩm" value="canva">Thiết kế Canva sáng tạo — 80.000đ/ấn phẩm</option>
-                <option data-price="150000" data-unit="bài" value="essay">Viết tiểu luận chuyên sâu — 150.000đ/bài</option>
-                <option data-price="500000" data-unit="đề tài" value="thesis">Hỗ trợ Luận văn tốt nghiệp — 500.000đ/đề tài</option>
-                <option data-price="50000" data-unit="bản" value="cv">Thiết kế CV chuẩn ATS — 50.000đ/bản</option>
-                <option data-price="60000" data-unit="file" value="excel">Xử lý Excel &amp; Chuyển đổi PDF — 60.000đ/file</option>
+                <option value="powerpoint">Thiết kế PowerPoint chuyên nghiệp — Chỉ từ 8.000đ/slide</option>
+                <option value="word">Soạn thảo &amp; Trình bày Word — Chỉ từ 50.000đ</option>
+                <option value="canva">Thiết kế Canva sáng tạo — Chỉ từ 80.000đ</option>
+                <option value="essay">Viết tiểu luận chuyên sâu — Chỉ từ 150.000đ</option>
+                <option value="thesis">Hỗ trợ Luận văn tốt nghiệp — Chỉ từ 500.000đ</option>
+                <option value="cv">Thiết kế CV chuẩn ATS — Chỉ từ 50.000đ</option>
+                <option value="excel">Xử lý Excel &amp; Chuyển đổi PDF — Chỉ từ 60.000đ</option>
               </select>
               <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
             </div>
+            <p class="hidden text-xs text-on-surface leading-relaxed bg-primary/5 border border-primary/20 rounded-xl px-3 py-2.5" id="pp-price-note">
+              <span class="font-semibold text-primary">(*) Chi phí PowerPoint tính theo slide:</span>
+              <b>8.000đ/slide</b> (đã có sẵn nội dung, chỉ cần thiết kế/làm hiệu ứng) |
+              <b>12.000đ/slide</b> (chưa có nội dung, cần tìm tài liệu).
+            </p>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            <div class="space-y-stack-sm">
-              <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="qty-input">Số lượng (<span id="qty-unit">bài</span>)</label>
-              <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-4" id="qty-input" min="1" required type="number" value="1"/>
-            </div>
-            <div class="space-y-stack-sm">
-              <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="deadline-input">Chọn Deadline</label>
-              <div class="relative">
-                <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-4 appearance-none" id="deadline-input" required type="date"/>
-                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">calendar_today</span>
-              </div>
+          <div class="space-y-stack-sm">
+            <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="deadline-input">Chọn Deadline</label>
+            <div class="relative">
+              <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-4 appearance-none" id="deadline-input" required type="date"/>
+              <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary">calendar_today</span>
             </div>
           </div>
-          <p class="text-xs text-outline px-1 -mt-4">Đặt trước ít nhất 3 ngày để có giá tốt nhất — deadline gấp hơn sẽ tính phụ phí hỏa tốc 30%.</p>
+          <p class="text-xs text-outline px-1 -mt-2">Đặt trước ít nhất 3 ngày để có giá tốt nhất — deadline gấp có thể phát sinh phụ phí, Admin sẽ báo cụ thể khi liên hệ.</p>
 
           <div class="space-y-stack-sm">
             <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="order-note">Mô tả yêu cầu chi tiết</label>
@@ -344,11 +345,6 @@
               <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-4" id="customer-phone" placeholder="090 123 4567" required type="tel"/>
             </div>
           </div>
-          <div class="space-y-stack-sm">
-            <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="promo-input">Mã giảm giá</label>
-            <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl px-4 py-4 uppercase placeholder:normal-case" id="promo-input" placeholder="Nhập mã, ví dụ: STUDENT20" type="text"/>
-            <p class="text-xs mt-1" id="promo-msg"></p>
-          </div>
         </div>
 
         <!-- BƯỚC 3: Xác nhận -->
@@ -356,12 +352,11 @@
           <div class="bg-surface-container-lowest border border-outline-variant/40 rounded-2xl p-5 space-y-3">
             <h3 class="text-xl font-semibold">Xem lại đơn hàng</h3>
             <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Dịch vụ</span><span class="font-semibold text-right" id="review-service">—</span></div>
-            <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Số lượng</span><span class="font-semibold" id="review-qty">—</span></div>
             <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Deadline</span><span class="font-semibold" id="review-deadline">—</span></div>
             <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Thanh toán</span><span class="font-semibold" id="review-payment">—</span></div>
             <div class="flex justify-between text-sm"><span class="text-on-surface-variant">Tài liệu</span><span class="font-semibold" id="review-files">—</span></div>
             <div class="h-px bg-outline-variant/30"></div>
-            <div class="flex justify-between items-center"><span class="text-xl font-semibold">Tổng tiền</span><span class="text-2xl font-bold text-primary" id="review-total">—</span></div>
+            <div class="flex justify-between items-center"><span class="text-lg font-semibold">Giá dịch vụ</span><span class="text-base font-bold text-primary">Ước tính theo yêu cầu</span></div>
           </div>
           <label class="flex items-start gap-3 text-sm text-on-surface-variant cursor-pointer">
             <input class="mt-0.5 rounded border-outline text-primary focus:ring-primary" required type="checkbox"/>
@@ -372,12 +367,15 @@
         <!-- Tóm tắt giá -->
         <div class="bg-surface-container-low rounded-2xl p-5 space-y-4 border border-surface-variant mt-8">
           <h3 class="text-xl font-semibold text-on-surface">Tóm tắt đơn hàng</h3>
-          <div class="space-y-2">
-            <div class="flex justify-between items-center text-sm text-on-surface-variant"><span>Giá cơ bản</span><span id="price-base">0đ</span></div>
-            <div class="flex justify-between items-center text-sm text-on-surface-variant"><span>Phụ phí hỏa tốc (Deadline &lt; 3 ngày)</span><span id="price-rush">0đ</span></div>
-            <div class="justify-between items-center text-sm text-on-surface-variant" id="discount-row" style="display:none"><span>Mã giảm giá</span><span class="text-error" id="price-discount">0đ</span></div>
-            <div class="h-px bg-outline-variant/30 my-2"></div>
-            <div class="flex justify-between items-center"><span class="text-xl font-semibold text-on-surface">Tổng tiền</span><span class="text-2xl font-bold text-primary" id="price-total">0đ</span></div>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-on-surface-variant">Giá dịch vụ</span>
+              <span class="font-bold text-primary">Ước tính theo yêu cầu</span>
+            </div>
+            <div class="rounded-xl bg-primary/5 border border-primary/20 px-4 py-3 flex items-start gap-2.5">
+              <span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">info</span>
+              <p class="text-sm text-on-surface leading-relaxed"><span class="font-semibold">Lưu ý:</span> Sau khi bạn bấm "Tiếp theo" và gửi đơn hàng, Admin sẽ kiểm tra file đính kèm/yêu cầu chi tiết của bạn và chủ động liên hệ qua Zalo/Email để báo mức giá chính xác nhất trước khi tiến hành làm bài.</p>
+            </div>
           </div>
         </div>
 
@@ -411,8 +409,8 @@
 <!-- Thanh ước tính cố định (mobile) -->
 <div class="md:hidden fixed bottom-20 left-0 w-full z-40 bg-surface-container-lowest px-4 py-3 flex items-center justify-between shadow-[0_-8px_24px_rgba(0,0,0,0.05)] border-t border-outline-variant/10" id="order-bottom-bar">
   <div>
-    <p class="text-xs text-outline">Ước tính</p>
-    <p class="text-xl font-bold text-primary" id="price-total-bar">0đ</p>
+    <p class="text-xs text-outline">Giá dịch vụ</p>
+    <p class="text-base font-bold text-primary">Ước tính theo yêu cầu</p>
   </div>
   <a class="bg-secondary-container text-on-secondary-fixed text-sm font-semibold px-5 py-2.5 rounded-xl tap-scale shadow-md" href="#dat-hang">Đến form đặt hàng</a>
 </div>

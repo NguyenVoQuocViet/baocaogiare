@@ -95,6 +95,11 @@
     }
   }
 
+  function changePrice(orderId, price) {
+    const o = allOrders.find((x) => x.id === orderId);
+    if (o) o.total_price = price;
+  }
+
   (async function init() {
     if (!sb || !window.Auth || !window.AdminCommon) {
       toast("Không kết nối được máy chủ.", "error");
@@ -108,7 +113,7 @@
     await loadOrdersForBell();
     AC.initNotifications(
       () => allOrders,
-      (o) => AC.openOrderDrawer(o, { onStatusChange: changeStatus })
+      (o) => AC.openOrderDrawer(o, { onStatusChange: changeStatus, onPriceChange: changePrice })
     );
   })();
 })();

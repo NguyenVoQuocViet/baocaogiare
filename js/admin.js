@@ -116,7 +116,7 @@
       tr.addEventListener("click", (e) => {
         if (e.target.closest(".status-select, [data-del-id], [data-file-link]")) return;
         const raw = orders.find((o) => o.id === Number(tr.dataset.orderId));
-        if (raw) AC.openOrderDrawer(raw, { onStatusChange: changeStatus, onDelete: handleDelete });
+        if (raw) AC.openOrderDrawer(raw, { onStatusChange: changeStatus, onDelete: handleDelete, onPriceChange: changePrice });
       })
     );
 
@@ -161,6 +161,14 @@
       renderOrders();
       return false;
     }
+  }
+
+  // Đồng bộ giá vừa chốt vào state cục bộ + tải lại thống kê/bảng tại chỗ
+  function changePrice(orderId, price) {
+    const item = orders.find((o) => o.id === orderId);
+    if (item) item.total_price = price;
+    renderStats();
+    renderOrders();
   }
 
   const ORDER_SELECT = "*, profiles(full_name, email, phone, university)";
@@ -251,7 +259,7 @@
     if (!ok) return; // đã bị điều hướng đi nơi khác
     notifCtl = AC.initNotifications(
       () => orders,
-      (row) => AC.openOrderDrawer(row, { onStatusChange: changeStatus, onDelete: handleDelete })
+      (row) => AC.openOrderDrawer(row, { onStatusChange: changeStatus, onDelete: handleDelete, onPriceChange: changePrice })
     );
     await loadOrders();
     subscribeRealtime();
