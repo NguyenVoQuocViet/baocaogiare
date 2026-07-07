@@ -269,8 +269,10 @@
     document.querySelectorAll("[data-auth-name]").forEach((el) => {
       el.textContent = name;
     });
-    // Hiện các phần tử chỉ dành cho người đã đăng nhập (vd: "Đơn hàng của tôi")
+    // Hiện các phần tử chỉ dành cho người đã đăng nhập (vd: "Đơn hàng của tôi", "Đăng xuất")
     document.querySelectorAll("[data-auth-user-only]").forEach((el) => el.classList.remove("hidden"));
+    // Ẩn các phần tử chỉ dành cho khách chưa đăng nhập (vd: "Đăng nhập", "Đăng ký")
+    document.querySelectorAll("[data-auth-guest-only]").forEach((el) => el.classList.add("hidden"));
     // Hiện lời chào / lối tắt tới dashboard nếu là admin
     document.querySelectorAll("[data-auth-greeting]").forEach((el) => {
       el.textContent = "Xin chào, " + name;

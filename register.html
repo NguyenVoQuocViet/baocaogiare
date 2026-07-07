@@ -51,7 +51,7 @@
 
       <form id="register-form" novalidate class="space-y-5">
         <div class="space-y-2">
-          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="register-name">Họ và tên</label>
+          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="register-name">Họ và tên <span class="text-error">*</span></label>
           <div class="relative">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">person</span>
             <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl pl-11 pr-4 py-3.5" id="register-name" placeholder="Nguyễn Văn A" required type="text" autocomplete="name"/>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="space-y-2">
-          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="register-email">Email</label>
+          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="register-email">Email <span class="text-error">*</span></label>
           <div class="relative">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">mail</span>
             <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl pl-11 pr-4 py-3.5" id="register-email" placeholder="example@email.com" required type="email" autocomplete="email"/>
@@ -84,7 +84,7 @@
         </div>
 
         <div class="space-y-2">
-          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="register-password">Mật khẩu</label>
+          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="register-password">Mật khẩu <span class="text-error">*</span></label>
           <div class="relative">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">lock</span>
             <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl pl-11 pr-11 py-3.5" id="register-password" placeholder="Ít nhất 6 ký tự" required type="password" autocomplete="new-password" minlength="6"/>
@@ -95,7 +95,7 @@
         </div>
 
         <div class="space-y-2">
-          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="register-confirm">Xác nhận mật khẩu</label>
+          <label class="block text-sm font-semibold text-on-surface-variant ml-1" for="register-confirm">Xác nhận mật khẩu <span class="text-error">*</span></label>
           <div class="relative">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">lock_reset</span>
             <input class="input-focus-ring w-full bg-surface-container-lowest border border-outline-variant rounded-2xl pl-11 pr-4 py-3.5" id="register-confirm" placeholder="Nhập lại mật khẩu" required type="password" autocomplete="new-password"/>

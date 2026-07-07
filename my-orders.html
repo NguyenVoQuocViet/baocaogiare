@@ -24,13 +24,20 @@
     <nav class="hidden md:flex items-center gap-stack-lg">
       <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html">Trang chủ</a>
       <a class="text-on-surface-variant hover:text-primary transition-colors" href="services.html">Dịch vụ</a>
-      <a class="text-primary font-bold border-b-2 border-primary pb-1 hidden" data-auth-user-only href="my-orders.html">Đơn hàng của tôi</a>
       <a class="text-on-surface-variant hover:text-primary transition-colors hidden" data-auth-admin-only href="admin-dashboard.html">Quản trị</a>
       <a class="text-on-surface-variant hover:text-primary transition-colors" href="index.html#lien-he">Liên hệ</a>
     </nav>
     <div class="flex items-center gap-3">
-      <a class="hidden md:block text-primary font-semibold hover:underline transition-all" href="login.html" data-auth-action>Đăng nhập</a>
-      <a class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-primary/20 tap-scale hover:opacity-90 transition-all" href="services.html#dat-hang">Đặt dịch vụ</a>
+      <!-- Khách chưa đăng nhập -->
+      <span class="contents" data-auth-guest-only>
+        <a class="hidden md:block text-primary font-semibold hover:underline transition-all" href="login.html">Đăng nhập</a>
+        <a class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-primary/20 tap-scale hover:opacity-90 transition-all" href="register.html">Đăng ký</a>
+      </span>
+      <!-- Đã đăng nhập -->
+      <span class="contents hidden" data-auth-user-only>
+        <a class="hidden md:block text-primary font-bold border-b-2 border-primary pb-1" href="my-orders.html">Đơn hàng của tôi</a>
+        <a class="bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-primary/20 tap-scale hover:opacity-90 transition-all" href="#" data-auth-action>Đăng xuất</a>
+      </span>
       <button aria-expanded="false" aria-label="Mở menu" class="md:hidden w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container rounded-full transition-colors" id="menu-toggle">
         <span class="hamburger"><span></span><span></span></span>
       </button>
@@ -53,8 +60,9 @@
     <a class="menu-link text-on-surface hover:text-primary transition-colors" href="index.html#lien-he">Liên hệ</a>
     <a class="menu-link bg-secondary-container text-on-secondary-fixed px-8 py-3 rounded-2xl text-lg shadow-lg tap-scale" href="services.html#dat-hang">Đặt dịch vụ ngay</a>
     <div class="w-full border-t border-outline-variant/40 my-2"></div>
-    <a class="menu-link text-primary font-bold" href="login.html" data-auth-action>Đăng nhập</a>
-    <a class="menu-link text-on-surface hover:text-primary transition-colors text-lg" href="register.html">Đăng ký tài khoản</a>
+    <a class="menu-link text-primary font-bold" href="login.html" data-auth-guest-only>Đăng nhập</a>
+    <a class="menu-link text-on-surface hover:text-primary transition-colors text-lg" href="register.html" data-auth-guest-only>Đăng ký tài khoản</a>
+    <a class="menu-link text-primary font-bold hidden" href="#" data-auth-user-only data-auth-action>Đăng xuất</a>
   </nav>
 </div>
 
@@ -131,22 +139,22 @@
 </footer>
 
 <!-- ===== Bottom navigation (mobile) ===== -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface flex justify-around items-center px-4 py-2 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)] h-20">
-  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" data-nav-page="index.html" href="index.html">
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface flex justify-around items-center px-1 py-2 pb-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)] h-20">
+  <a class="flex flex-col items-center justify-center py-2 px-2 tap-scale transition-colors" data-nav-page="index.html" href="index.html">
     <span class="material-symbols-outlined">home</span>
-    <span class="text-xs font-medium mt-1">Trang chủ</span>
+    <span class="text-xs font-medium mt-1 whitespace-nowrap">Trang chủ</span>
   </a>
-  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors" data-nav-page="services.html" href="services.html">
+  <a class="flex flex-col items-center justify-center py-2 px-2 tap-scale transition-colors" data-nav-page="services.html" href="services.html">
     <span class="material-symbols-outlined">apps</span>
-    <span class="text-xs font-medium mt-1">Dịch vụ</span>
+    <span class="text-xs font-medium mt-1 whitespace-nowrap">Dịch vụ</span>
   </a>
-  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors text-primary" data-nav-page="my-orders.html" href="my-orders.html">
+  <a class="flex flex-col items-center justify-center py-2 px-2 tap-scale transition-colors text-primary" data-nav-page="my-orders.html" href="my-orders.html">
     <span class="material-symbols-outlined is-filled">receipt_long</span>
-    <span class="text-xs font-medium mt-1">Đơn của tôi</span>
+    <span class="text-xs font-medium mt-1 whitespace-nowrap">Đơn của tôi</span>
   </a>
-  <a class="flex flex-col items-center justify-center py-2 px-4 tap-scale transition-colors hidden" data-auth-admin-only data-nav-page="admin-dashboard.html" href="admin-dashboard.html">
+  <a class="flex flex-col items-center justify-center py-2 px-2 tap-scale transition-colors hidden" data-auth-admin-only data-nav-page="admin-dashboard.html" href="admin-dashboard.html">
     <span class="material-symbols-outlined">admin_panel_settings</span>
-    <span class="text-xs font-medium mt-1">Quản trị</span>
+    <span class="text-xs font-medium mt-1 whitespace-nowrap">Quản trị</span>
   </a>
 </nav>
 

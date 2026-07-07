@@ -5,6 +5,26 @@
 (function () {
   "use strict";
 
+  /* ---------- Không khôi phục vị trí cuộn cũ khi tải trang ----------
+     Chrome nhớ vị trí cuộn theo từng URL; khi mở lại services.html nó tự
+     kéo xuống chỗ cũ (vd form đặt hàng). Ép về đầu trang nếu URL không có
+     neo (#...); nếu có neo (vd #dat-hang) thì cuộn tới đúng mục đó.
+     Chạy nhiều mốc (ngay lập tức, DOMContentLoaded, sau load, bfcache) để
+     ghi đè cả lần khôi phục muộn của trình duyệt. */
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  const resetScroll = () => {
+    if (location.hash) {
+      const target = document.querySelector(location.hash);
+      if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    } else {
+      window.scrollTo(0, 0);
+    }
+  };
+  resetScroll();
+  window.addEventListener("DOMContentLoaded", resetScroll);
+  window.addEventListener("load", () => setTimeout(resetScroll, 0));
+  window.addEventListener("pageshow", (e) => { if (e.persisted) resetScroll(); });
+
   /* ---------- Menu mobile (overlay kính + stagger) ---------- */
   const menuToggle = document.getElementById("menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
@@ -91,6 +111,20 @@
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+  });
+
+  /* ---------- Link trỏ về chính trang hiện tại → cuộn lên đầu ---------- */
+  const thisPage = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href || href.indexOf("#") !== -1) return; // bỏ qua anchor nội trang
+    const file = href.split("?")[0].toLowerCase();
+    if (file === thisPage) {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
   });
 
   /* ---------- Đánh dấu tab đang hoạt động ở bottom-nav ---------- */
