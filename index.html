@@ -106,9 +106,18 @@
           <div class="absolute inset-0 bg-primary/10 blur-[100px] rounded-full"></div>
           <div
             class="glass-card p-4 rounded-3xl relative z-10 card-shadow rotate-3 hover:rotate-0 transition-transform duration-500">
-            <img alt="Laptop hiển thị bản thiết kế trình chiếu trên bàn làm việc"
-              class="w-full h-auto rounded-2xl shadow-lg border border-outline-variant"
-              src="https://picsum.photos/seed/workspace-canva/960/640" />
+            <!-- Slideshow tự đổi ảnh sau 5s. Ảnh nằm trong thư mục images/ (xem images/README.md) -->
+            <div class="hero-slideshow w-full rounded-2xl shadow-lg border border-outline-variant overflow-hidden"
+              id="hero-slideshow">
+              <img class="hero-slide is-active" src="images/hero-1.jpg" alt="Bản thiết kế trình chiếu chuyên nghiệp"
+                onerror="this.onerror=null;this.src='https://picsum.photos/seed/workspace-canva/1200/800'" />
+              <img class="hero-slide" src="images/hero-2.jpg" alt="Sinh viên làm việc với tài liệu học thuật"
+                onerror="this.onerror=null;this.src='https://picsum.photos/seed/study-desk/1200/800'" />
+              <img class="hero-slide" src="images/hero-3.jpg" alt="Thiết kế đồ họa và trình bày ấn tượng"
+                onerror="this.onerror=null;this.src='https://picsum.photos/seed/creative-design/1200/800'" />
+              <img class="hero-slide" src="images/hero-4.jpg" alt="Lập trình"
+                onerror="this.onerror=null;this.src='https://picsum.photos/seed/creative-design/1200/800'" />
+            </div>
           </div>
           <div class="absolute -bottom-6 -left-6 glass-card p-6 rounded-2xl shadow-xl z-20">
             <div class="flex items-center gap-3">
@@ -196,7 +205,7 @@
             class="w-12 h-12 bg-secondary-container/10 text-secondary rounded-xl flex items-center justify-center mb-4">
             <span class="material-symbols-outlined text-[32px]">school</span>
           </div>
-          <h3 class="text-sm font-semibold text-on-surface mb-1">Hỗ trợ Luận văn</h3>
+          <h3 class="text-sm font-semibold text-on-surface mb-1">Bài tập lớn môn học</h3>
           <p class="text-[12px] text-on-surface-variant">Từ 500k</p>
         </a>
       </div>
@@ -284,11 +293,11 @@
             class="w-14 h-14 bg-tertiary-fixed/30 rounded-xl flex items-center justify-center text-tertiary mb-6 group-hover:bg-tertiary group-hover:text-white transition-colors">
             <span class="material-symbols-outlined text-[32px]">school</span>
           </div>
-          <h3 class="text-xl font-semibold text-on-surface mb-3">Hỗ trợ Luận văn</h3>
-          <p class="text-on-surface-variant mb-6">Căn chỉnh format chuẩn bộ giáo dục, hỗ trợ vẽ biểu đồ và xử lý số
-            liệu.</p>
+          <h3 class="text-xl font-semibold text-on-surface mb-3">Bài tập lớn môn học</h3>
+          <p class="text-on-surface-variant mb-6">Hỗ trợ bài tập lớn, đồ án môn học (Web, nhúng, IoT,...) — code,
+            báo cáo và demo theo đúng yêu cầu.</p>
           <div class="flex justify-between items-center border-t border-surface-container pt-4">
-            <span class="text-sm text-on-surface-variant italic">Giá từ 500.000đ</span>
+            <span class="text-sm text-on-surface-variant italic">Giá từ 400.000đ</span>
             <span
               class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
           </div>
@@ -451,7 +460,7 @@
             </div>
             <div class="relative hidden lg:block">
               <img alt="Đội ngũ hỗ trợ học thuật đang làm việc" class="rounded-2xl shadow-2xl w-full object-cover"
-                src="https://picsum.photos/seed/team-office/800/560" />
+                src="images/whychooseus.png" />
             </div>
           </div>
         </div>

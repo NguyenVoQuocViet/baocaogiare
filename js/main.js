@@ -139,6 +139,20 @@
     if (icon) icon.classList.toggle("is-filled", isActive);
   });
 
+  /* ---------- Hero slideshow: tự đổi ảnh sau mỗi 5 giây ---------- */
+  const heroShow = document.getElementById("hero-slideshow");
+  if (heroShow) {
+    const slides = heroShow.querySelectorAll(".hero-slide");
+    if (slides.length > 1) {
+      let heroIdx = 0;
+      setInterval(() => {
+        slides[heroIdx].classList.remove("is-active");
+        heroIdx = (heroIdx + 1) % slides.length;
+        slides[heroIdx].classList.add("is-active");
+      }, 5000);
+    }
+  }
+
   /* ---------- Năm hiện tại ở footer ---------- */
   document.querySelectorAll("[data-year]").forEach((el) => {
     el.textContent = new Date().getFullYear();

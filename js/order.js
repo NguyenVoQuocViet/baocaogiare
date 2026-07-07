@@ -71,6 +71,8 @@
     const serviceSelect = document.getElementById("service-select");
     const deadlineInput = document.getElementById("deadline-input");
     const ppNote = document.getElementById("pp-price-note"); // chú thích giá PowerPoint theo slide
+    const bigProjectField = document.getElementById("bigproject-field"); // khối "Loại bài tập lớn"
+    const bigProjectType = document.getElementById("bigproject-type"); // select loại bài tập lớn
 
     let current = 1;
     const totalSteps = steps.length;
@@ -126,6 +128,19 @@
     const applyServiceMode = () => {
       const isPowerPoint = serviceSelect.value === "powerpoint";
       if (ppNote) ppNote.classList.toggle("hidden", !isPowerPoint);
+
+      // "Bài tập lớn môn học" (value="thesis") → hiện chọn loại bài tập lớn, bắt buộc chọn
+      const isBigProject = serviceSelect.value === "thesis";
+      if (bigProjectField) bigProjectField.classList.toggle("hidden", !isBigProject);
+      if (bigProjectType) {
+        if (isBigProject) {
+          bigProjectType.setAttribute("required", "");
+        } else {
+          bigProjectType.removeAttribute("required");
+          bigProjectType.value = "";
+          bigProjectType.classList.remove("field-error");
+        }
+      }
     };
 
     if (serviceSelect) serviceSelect.addEventListener("change", applyServiceMode);
@@ -194,7 +209,12 @@
         const el = document.getElementById(id);
         if (el) el.textContent = val;
       };
-      set("review-service", serviceSelect.options[serviceSelect.selectedIndex].text);
+      const bigProject =
+        serviceSelect.value === "thesis" && bigProjectType && bigProjectType.value ? bigProjectType.value : "";
+      set(
+        "review-service",
+        serviceSelect.options[serviceSelect.selectedIndex].text + (bigProject ? " · " + bigProject : "")
+      );
       set("review-deadline", deadlineInput.value ? new Date(deadlineInput.value).toLocaleDateString("vi-VN") : "—");
       const method = form.querySelector('input[name="payment"]:checked');
       set("review-payment", method ? method.dataset.label : "—");
@@ -235,8 +255,11 @@
       const method = form.querySelector('input[name="payment"]:checked');
       const payLabel = method ? method.dataset.label : "";
       const fileNames = fileStore.map((f) => f.name).join(", ");
+      const bigProject =
+        serviceSelect.value === "thesis" && bigProjectType ? bigProjectType.value : "";
 
       const details = [
+        bigProject ? "Loại bài tập lớn: " + bigProject : "",
         payLabel ? "Thanh toán: " + payLabel : "",
         name || phone ? "Liên hệ: " + [name, phone].filter(Boolean).join(" - ") : "",
         fileNames ? "Tệp đính kèm: " + fileNames : "",
